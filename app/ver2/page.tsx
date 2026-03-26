@@ -207,6 +207,7 @@ function MarketPosition() {
             Zero brokers in Singapore currently offer pre-sale revenue optimisation or AI/digital positioning.
           </p>
         </div>
+      </div>
     </section>
   );
 }
