@@ -3,13 +3,13 @@
 import { useState, useEffect } from 'react';
 
 // ─── Design Tokens ─────────────────────────────────────────────────────────
-const CR = '#F5F0E4';       // warm cream — matches PDF background
-const MA = '#501508';       // maroon
-const GO = '#BC9C22';       // gold
-const GL = '#D4AF37';       // gold light
-const TX = '#3D2B1A';       // body text (warm dark brown)
-const TM = '#6B5040';       // secondary text
-const BD = '#DDD6C8';       // border
+const CR = '#F5F0E4';
+const MA = '#501508';
+const GO = '#BC9C22';
+const GL = '#D4AF37';
+const TX = '#3D2B1A';
+const TM = '#6B5040';
+const BD = '#DDD6C8';
 
 const serif = "'Cormorant Garamond', Georgia, serif";
 const sans  = "'Jost', system-ui, sans-serif";
@@ -24,18 +24,18 @@ const PH = {
 };
 
 // ─── Shared Styles ──────────────────────────────────────────────────────────
-const eyebrow = {
-  fontFamily: sans, fontSize: '0.68rem', fontWeight: 600 as const,
-  color: GO, letterSpacing: '0.15em', textTransform: 'uppercase' as const,
+const eyebrow: React.CSSProperties = {
+  fontFamily: sans, fontSize: '0.68rem', fontWeight: 600,
+  color: GO, letterSpacing: '0.15em', textTransform: 'uppercase',
   marginBottom: '1rem', display: 'block',
 };
-const sectionWrap = {
+const sectionStyle: React.CSSProperties = {
   background: CR, padding: '88px 2rem', borderTop: `1px solid ${BD}`,
 };
-const inner = { maxWidth: 1100, margin: '0 auto' };
-const splitGrid = {
+const inner: React.CSSProperties = { maxWidth: 1100, margin: '0 auto' };
+const split: React.CSSProperties = {
   display: 'grid', gridTemplateColumns: '1fr 1fr',
-  gap: '5rem', alignItems: 'center' as const,
+  gap: '5rem', alignItems: 'center',
 };
 
 // ─── Header ─────────────────────────────────────────────────────────────────
@@ -48,7 +48,7 @@ function Header() {
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
-  const navLinks = [
+  const links = [
     { label: 'Our Approach', href: '#v2-approach' },
     { label: 'Pricing',      href: '#v2-pricing'  },
     { label: 'Who We Serve', href: '#v2-serve'    },
@@ -57,44 +57,39 @@ function Header() {
   return (
     <header style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
-      background: scrolled ? `rgba(245,240,228,0.97)` : 'transparent',
+      background: scrolled ? 'rgba(245,240,228,0.97)' : 'transparent',
       borderBottom: scrolled ? `1px solid ${BD}` : 'none',
       backdropFilter: scrolled ? 'blur(8px)' : 'none',
       transition: 'all 0.3s ease',
     }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        {/* Logo */}
         <a href="/ver2" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
           <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: GL }}>Exit</span>
           <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 600, color: MA }}>Path</span>
           <span style={{ fontFamily: sans, fontSize: '0.63rem', fontWeight: 500, color: TM, marginLeft: '0.3rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Global</span>
         </a>
-
-        {/* Desktop nav */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '2rem' }} className="hidden-mobile">
-          {navLinks.map(l => (
-            <a key={l.href} href={l.href} style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 500, color: scrolled ? TM : MA, textDecoration: 'none', letterSpacing: '0.03em' }}>
-              {l.label}
-            </a>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+          {links.map(l => (
+            <a key={l.href} href={l.href} style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 500, color: scrolled ? TM : MA, textDecoration: 'none' }}>{l.label}</a>
           ))}
           <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 600, color: CR, background: MA, padding: '0.5rem 1.25rem', borderRadius: 4, textDecoration: 'none' }}>
             Start a Conversation
           </a>
         </nav>
-
-        {/* Mobile toggle */}
-        <button onClick={() => setOpen(o => !o)} style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'none', flexDirection: 'column', gap: 5, padding: 4 }} className="show-mobile" aria-label="Menu">
-          {[0,1,2].map(i => <span key={i} style={{ display: 'block', width: 22, height: 2, background: MA }} />)}
+        <button onClick={() => setOpen(o => !o)} aria-label="Menu"
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'none' }}
+          className="mobile-menu-btn">
+          {[0,1,2].map(i => <span key={i} style={{ display: 'block', width: 22, height: 2, background: MA, margin: '4px 0' }} />)}
         </button>
       </div>
-
-      {/* Mobile menu */}
       {open && (
         <div style={{ background: CR, borderTop: `1px solid ${BD}`, padding: '1.5rem 2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-          {navLinks.map(l => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)} style={{ fontFamily: sans, fontSize: '1rem', color: MA, textDecoration: 'none' }}>{l.label}</a>
+          {links.map(l => (
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)}
+              style={{ fontFamily: sans, fontSize: '1rem', color: MA, textDecoration: 'none' }}>{l.label}</a>
           ))}
-          <a href="#v2-contact" onClick={() => setOpen(false)} style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '0.75rem 1.5rem', borderRadius: 4, textDecoration: 'none', textAlign: 'center' }}>
+          <a href="#v2-contact" onClick={() => setOpen(false)}
+            style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '0.75rem', borderRadius: 4, textDecoration: 'none', textAlign: 'center' }}>
             Start a Conversation
           </a>
         </div>
@@ -103,17 +98,15 @@ function Header() {
   );
 }
 
-// ─── Hero ────────────────────────────────────────────────────────────────────
+// ─── Section 1: Hero ────────────────────────────────────────────────────────
 function Hero() {
   return (
     <section style={{ background: CR, paddingTop: 104, paddingBottom: 80, paddingLeft: '2rem', paddingRight: '2rem' }}>
-      <div style={{ ...inner, ...splitGrid }}>
-        {/* Left: text */}
+      <div style={{ ...inner, ...split }}>
         <div>
-          <span style={eyebrow}>Strategic Exit Advisory · Singapore</span>
+          <span style={eyebrow}>Strategic Exit Advisory</span>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(2.4rem, 4vw, 3.4rem)', fontWeight: 700, color: MA, lineHeight: 1.1, marginBottom: '1.5rem' }}>
-            We make your business worth more —{' '}
-            <em style={{ fontStyle: 'italic', color: GL }}>before we sell it.</em>
+            <span style={{ color: GL }}>Exit</span>Path Global helps founders unlock the full value of their business.
           </h1>
           <p style={{ fontFamily: sans, fontSize: '1.05rem', color: TM, lineHeight: 1.75, marginBottom: '2.5rem', maxWidth: 460 }}>
             Clear preparation. Sharp positioning. Precise deal execution — delivered with global reach and total confidentiality.
@@ -127,25 +120,22 @@ function Hero() {
             </a>
           </div>
         </div>
-
-        {/* Right: photo */}
         <div style={{ position: 'relative' }}>
           <img src={PH.hero} alt="Strategic business advisory" loading="lazy"
             style={{ width: '100%', height: 480, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
-          {/* floating stat card */}
-          <div style={{ position: 'absolute', bottom: 28, left: -28, background: CR, borderRadius: 8, padding: '1rem 1.5rem', boxShadow: `0 4px 24px rgba(80,21,8,0.14)`, border: `1px solid ${BD}` }}>
+          <div style={{ position: 'absolute', bottom: 28, left: -28, background: CR, borderRadius: 8, padding: '1rem 1.5rem', boxShadow: '0 4px 24px rgba(80,21,8,0.14)', border: `1px solid ${BD}` }}>
             <p style={{ fontFamily: serif, fontSize: '1.75rem', fontWeight: 700, color: MA, margin: 0, lineHeight: 1 }}>30-pt</p>
             <p style={{ fontFamily: sans, fontSize: '0.65rem', fontWeight: 600, color: TM, margin: 0, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 4 }}>Saleability Score™</p>
           </div>
         </div>
       </div>
 
-      {/* Stats bar */}
+      {/* Stats bar — direct from copy doc */}
       <div style={{ ...inner, borderTop: `1px solid ${BD}`, marginTop: '4rem', paddingTop: '2.5rem', display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
         {[
-          { stat: 'SGD 500K–10M', label: 'EBITDA Range We Serve' },
-          { stat: '6',            label: 'Strategic Dimensions Scored' },
-          { stat: '1–3 yr',       label: 'Typical Exit Horizon' },
+          { stat: 'SGD 10M', label: 'Max EBITDA Target'    },
+          { stat: '30-pt',   label: 'Saleability Score™'  },
+          { stat: '6',       label: 'Strategic Dimensions' },
         ].map(item => (
           <div key={item.stat}>
             <p style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: MA, margin: 0, lineHeight: 1 }}>{item.stat}</p>
@@ -157,10 +147,10 @@ function Hero() {
   );
 }
 
-// ─── Brand Promise ───────────────────────────────────────────────────────────
+// ─── Section 2: Brand Promise ────────────────────────────────────────────────
 function BrandPromise() {
   return (
-    <section style={sectionWrap}>
+    <section style={sectionStyle}>
       <div style={{ ...inner, textAlign: 'center', maxWidth: 860, margin: '0 auto' }}>
         <span style={eyebrow}>Brand Promise</span>
         <h2 style={{ fontFamily: serif, fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 600, color: MA, lineHeight: 1.2, marginBottom: '1.5rem' }}>
@@ -168,7 +158,7 @@ function BrandPromise() {
           <em style={{ fontStyle: 'italic', color: GL }}>we make it worth more</em>{' '}
           before we do.
         </h2>
-        <p style={{ fontFamily: sans, fontSize: '1rem', fontWeight: 600, color: TM, letterSpacing: '0.03em', fontStyle: 'italic' }}>
+        <p style={{ fontFamily: sans, fontSize: '1rem', fontWeight: 600, color: TM, letterSpacing: '0.02em', fontStyle: 'italic' }}>
           This promise is tangible, measurable, and defensible.
         </p>
       </div>
@@ -176,40 +166,63 @@ function BrandPromise() {
   );
 }
 
-// ─── Market Gap ──────────────────────────────────────────────────────────────
-function MarketGap() {
-  const points = [
-    'Revenue and cost optimisation pre-sale',
+// ─── Section 3: Market Position ─────────────────────────────────────────────
+function MarketPosition() {
+  const overserved = [
+    'Business listings & buyer databases',
+    'Commoditised success fees (5–12%, with 59% charging a flat 10%)',
+    'Focus on speed-to-close',
+    'Generic deal execution',
+    'DIY marketplace platforms',
+  ];
+  const underserved = [
+    'Revenue, process & cost optimisation pre-sale',
     'Operational maturity & succession planning',
-    'AI & digital positioning for premium buyers',
-    'Saleability diagnostics & strategic exit timing',
+    'AI & digital positioning',
+    'Saleability diagnostics & improvement',
+    'Strategic exit timing & buyer targeting',
   ];
   return (
-    <section style={sectionWrap}>
-      <div style={{ ...inner, ...splitGrid }}>
-        {/* Photo left */}
+    <section style={sectionStyle}>
+      <div style={{ ...inner, ...split }}>
         <img src={PH.market} alt="ExitPath advisory discussion" loading="lazy"
-          style={{ width: '100%', height: 480, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
-
-        {/* Text right */}
+          style={{ width: '100%', height: 500, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
         <div>
-          <span style={eyebrow}>The Market Gap</span>
+          <span style={eyebrow}>Market Position</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1.25rem' }}>
-            Most advisors rush the sale. We engineer the value.
+            Occupy the Gap Nobody Else Fills
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8, marginBottom: '1.75rem' }}>
-            The market is dominated by generalist brokers focused on listings, buyer databases, and speed to close. ExitPath Global occupies the gap they consistently ignore.
+          <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.8, marginBottom: '1.75rem' }}>
+            The SME exit market is saturated with generalist brokers competing on buyer databases and deal speed. ExitPath operates in the underserved, high-value space — the{' '}
+            <strong style={{ color: MA }}>$1M–$10M range with value-improvement positioning</strong>{' '}
+            that nobody currently owns.
           </p>
-          <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 1.75rem 0', display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
-            {points.map(pt => (
-              <li key={pt} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                <span style={{ color: GO, fontSize: '1rem', fontWeight: 700, flexShrink: 0, marginTop: 2 }}>→</span>
-                <span style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.65 }}>{pt}</span>
-              </li>
-            ))}
-          </ul>
-          <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '0.9rem', color: MA }}>
-            <span style={{ color: GL }}>Exit</span>Path Global occupies this gap.
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div style={{ padding: '1.25rem', background: '#EDE8DF', borderRadius: 8 }}>
+              <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: TM, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.875rem' }}>
+                What Everyone Else Does
+              </p>
+              {overserved.map(pt => (
+                <div key={pt} style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                  <span style={{ color: '#9A9A9A', fontWeight: 700, flexShrink: 0, fontSize: '0.75rem', marginTop: 1 }}>✕</span>
+                  <span style={{ fontFamily: sans, fontSize: '0.78rem', color: TM, lineHeight: 1.5 }}>{pt}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ padding: '1.25rem', background: '#FBF8F0', border: `1px solid ${GO}`, borderRadius: 8 }}>
+              <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.875rem' }}>
+                ExitPath&apos;s Territory
+              </p>
+              {underserved.map(pt => (
+                <div key={pt} style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                  <span style={{ color: GO, fontWeight: 700, flexShrink: 0, fontSize: '0.75rem', marginTop: 1 }}>→</span>
+                  <span style={{ fontFamily: sans, fontSize: '0.78rem', color: MA, lineHeight: 1.5, fontWeight: 500 }}>{pt}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <p style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 700, color: TM, marginTop: '1.25rem', fontStyle: 'italic' }}>
+            Zero brokers in Singapore currently offer pre-sale revenue optimisation or AI/digital positioning.
           </p>
         </div>
       </div>
@@ -217,40 +230,68 @@ function MarketGap() {
   );
 }
 
-// ─── Approach ────────────────────────────────────────────────────────────────
-function Approach() {
-  const pillars = [
+// ─── Section 4: What Sets Us Apart ──────────────────────────────────────────
+function Differentiators() {
+  const cards = [
     {
-      roman: 'I',
-      title: 'Saleability Score™ Diagnostic',
-      body: 'A proprietary 30-point scoring model across 6 strategic dimensions. It tells you exactly where your business stands — and what to fix before going to market.',
+      title: 'Saleability Score™',
+      stat: '30-pt',
+      front: 'Proprietary 30-point diagnostic across 6 strategic dimensions — no other broker in Singapore offers this.',
+      back: 'Zero Competitors Offer This. No broker in Singapore provides a data-backed, multi-dimensional diagnostic before listing.',
     },
     {
-      roman: 'II',
-      title: 'Revenue & Digital Excellence',
-      body: 'We identify and implement 10–20% revenue growth opportunities, AI & digital upgrades, pricing strategy, and operational readiness improvements before the sale.',
+      title: '10–20% Revenue Growth',
+      stat: '10–20%',
+      front: 'We optimise revenue, costs, and processes before going to market — translating to multiplied gains on your sale price.',
+      back: 'Revenue Growth Pre-Sale. A 15% revenue increase on a business valued at 4× EBITDA translates to hundreds of thousands in additional enterprise value.',
     },
     {
-      roman: 'III',
-      title: 'Strategic Execution & Expertise',
-      body: 'Full deal management from positioning to close — buyer identification, negotiation, term optimisation — with confidentiality embedded into every step.',
+      title: 'AI & Digital Positioning',
+      stat: '0',
+      front: 'Modernise your digital footprint and integrate AI-driven improvements to appeal to sophisticated buyers.',
+      back: 'Brokers Offer This. Traditional brokers focus on listings and databases. Zero brokers in Singapore modernise your digital footprint pre-sale.',
+    },
+    {
+      title: 'Confidentiality Without Compromise',
+      stat: '59%',
+      front: 'Embedded into every process, decision, and communication. 59% of brokers use a flat-fee model with no discretion layer.',
+      back: 'Use Flat-Fee, No Discretion. Most brokers charge a commodity 10% with no confidentiality protocol built in.',
+    },
+    {
+      title: 'Founder-First Thinking',
+      stat: '1–3 yr',
+      front: 'We protect the interests, legacy, and future of business owners — not just the transaction.',
+      back: 'Typical Exit Horizon. We work with founders who are planning ahead, not rushing. Better preparation means better outcomes.',
+    },
+    {
+      title: 'Global Perspective',
+      stat: '80%',
+      front: 'Cross-border, cross-industry, and cross-cycle — connecting you with the right buyers worldwide.',
+      back: 'Of Buyers Are International. Market data shows the majority of acquirers in Singapore are cross-border. Global reach is not optional — it is essential.',
     },
   ];
+
   return (
-    <section id="v2-approach" style={sectionWrap}>
+    <section style={sectionStyle}>
       <div style={inner}>
-        <div style={{ marginBottom: '3.5rem', maxWidth: 640 }}>
-          <span style={eyebrow}>Our Approach</span>
-          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2 }}>
-            Saleability-First. Value-Driven.
+        <div style={{ marginBottom: '3.5rem', maxWidth: 700 }}>
+          <span style={eyebrow}>Why ExitPath</span>
+          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
+            Built on value creation, not just deal execution.
           </h2>
+          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8 }}>
+            Every engagement starts with making your business more valuable, more transferable, and more attractive to the right buyers.
+          </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
-          {pillars.map(p => (
-            <div key={p.roman} style={{ padding: '2.25rem 2rem', border: `1px solid ${BD}`, borderRadius: 8 }}>
-              <p style={{ fontFamily: serif, fontSize: '2.25rem', fontWeight: 700, color: GO, marginBottom: '1rem', lineHeight: 1 }}>{p.roman}</p>
-              <h3 style={{ fontFamily: serif, fontSize: '1.3rem', fontWeight: 700, color: MA, marginBottom: '0.875rem', lineHeight: 1.3 }}>{p.title}</h3>
-              <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.8 }}>{p.body}</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+          {cards.map(c => (
+            <div key={c.title} style={{ padding: '2rem', border: `1px solid ${BD}`, borderRadius: 8, background: CR }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                <h3 style={{ fontFamily: serif, fontSize: '1.2rem', fontWeight: 700, color: MA, lineHeight: 1.3, flex: 1, marginRight: '0.75rem' }}>{c.title}</h3>
+                <span style={{ fontFamily: serif, fontSize: '1.4rem', fontWeight: 700, color: GO, flexShrink: 0 }}>{c.stat}</span>
+              </div>
+              <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.7, marginBottom: '1rem' }}>{c.front}</p>
+              <p style={{ fontFamily: sans, fontSize: '0.8rem', color: TM, lineHeight: 1.65, fontStyle: 'italic', borderTop: `1px solid ${BD}`, paddingTop: '0.875rem' }}>{c.back}</p>
             </div>
           ))}
         </div>
@@ -259,46 +300,110 @@ function Approach() {
   );
 }
 
-// ─── Saleability Quadrant ────────────────────────────────────────────────────
-function SaleabilityQuadrant() {
-  const cells = [
-    { quadrant: 'Value Builder',     corner: 'top-left',     desc: 'High market appeal, needs operational improvement',      accent: TM,      bg: '#EDE8DF' },
-    { quadrant: 'Highly Saleable',   corner: 'top-right',    desc: 'Strong revenue and lean operations — ready to market',   accent: MA,      bg: CR    },
-    { quadrant: 'Foundation Build',  corner: 'bottom-left',  desc: 'Needs significant work across both dimensions',          accent: '#9A9A9A', bg: '#E8E3DA' },
-    { quadrant: 'Strategic Fix',     corner: 'bottom-right', desc: 'Good operations but revenue needs targeted improvement', accent: GO,      bg: '#F2EDE4' },
+// ─── Section 5: Our Approach ─────────────────────────────────────────────────
+function Approach() {
+  const blocks = [
+    {
+      step: 'Step 01',
+      title: 'Saleability Score™ Diagnostic',
+      body: 'Proprietary 30-point scoring model across 6 strategic dimensions to assess sale readiness and identify value gaps. The score tells you whether you are ready to go to market, or whether targeted improvements will unlock meaningfully higher valuations.',
+    },
+    {
+      step: 'Steps 02 & 03',
+      title: 'Revenue & Digital Excellence',
+      body: 'Drive 10–20% revenue growth and eliminate operational inefficiencies before going to market. Modernise your digital footprint with AI-driven improvements to appeal to sophisticated buyers.',
+    },
+    {
+      step: 'Steps 04 & 05',
+      title: 'Strategic Execution & Expertise',
+      body: 'Precision targeting of strategic acquirers, family offices, and growth investors with full confidentiality management. Specialist in agencies, consulting firms, and digital SMEs where operational maturity is the key value multiplier.',
+    },
   ];
+  const dimensions = ['Financial Clarity', 'Revenue Quality', 'Operational Maturity', 'Digital Readiness', 'Management Depth', 'Market Position'];
+
   return (
-    <section id="v2-quadrant" style={sectionWrap}>
+    <section id="v2-approach" style={sectionStyle}>
       <div style={inner}>
-        <div style={{ marginBottom: '3rem', maxWidth: 640 }}>
-          <span style={eyebrow}>Saleability Quadrant</span>
-          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2 }}>
-            Where Does Your Business Stand?
+        <div style={{ marginBottom: '3.5rem', maxWidth: 640 }}>
+          <span style={eyebrow}>Our Approach</span>
+          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
+            Saleability-First. Value-Driven.
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, marginTop: '0.875rem', lineHeight: 1.8 }}>
-            Our Saleability Score™ maps your business across two dimensions: market appeal and operational readiness. Your quadrant determines your path to exit.
+          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8 }}>
+            ExitPath is an advisory built on value creation, not just deal execution.
           </p>
         </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginBottom: '3rem' }}>
+          {blocks.map(b => (
+            <div key={b.title} style={{ padding: '2.25rem 2rem', border: `1px solid ${BD}`, borderRadius: 8 }}>
+              <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.875rem' }}>{b.step}</p>
+              <h3 style={{ fontFamily: serif, fontSize: '1.3rem', fontWeight: 700, color: MA, marginBottom: '0.875rem', lineHeight: 1.3 }}>{b.title}</h3>
+              <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.8 }}>{b.body}</p>
+            </div>
+          ))}
+        </div>
+        <div style={{ padding: '1.5rem 2rem', border: `1px solid ${BD}`, borderRadius: 8, background: '#FBF8F3' }}>
+          <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+            The 6 Strategic Dimensions
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.625rem' }}>
+            {dimensions.map(d => (
+              <span key={d} style={{ fontFamily: sans, fontSize: '0.82rem', fontWeight: 600, color: MA, background: CR, border: `1px solid ${BD}`, padding: '0.375rem 0.875rem', borderRadius: 20 }}>{d}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', maxWidth: 680, border: `1px solid ${BD}`, borderRadius: 8, overflow: 'hidden' }}>
-          {cells.map(c => (
-            <div key={c.quadrant} style={{ background: c.bg, padding: '2rem', borderBottom: c.corner.startsWith('top') ? `1px solid ${BD}` : 'none', borderRight: c.corner.endsWith('left') ? `1px solid ${BD}` : 'none' }}>
-              <span style={{ display: 'inline-block', background: c.accent, color: CR, fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.25rem 0.75rem', borderRadius: 20, marginBottom: '0.75rem' }}>
-                {c.quadrant}
-              </span>
+// ─── Section 6: Saleability Quadrant ────────────────────────────────────────
+function SaleabilityQuadrant() {
+  const cells = [
+    { name: 'Risky Sale',    score: '13–18', desc: 'Good operational setup but no clear USP or growth potential. Low attractiveness to buyers.',                            accent: TM, bg: '#EDE8DF' },
+    { name: 'Ideal Sale ★',  score: '25–30', desc: 'Premium asset. Strong in all areas — operational excellence, growth story, and buyer appeal.',                          accent: MA, bg: '#FBF8F0' },
+    { name: 'Hard to Sell',  score: '6–12',  desc: 'Needs major fixes and is unattractive to buyers. High operational risk, no growth story.',                              accent: '#9A9A9A', bg: '#E8E3DA' },
+    { name: 'Strategic Fix', score: '19–24', desc: 'Attractive to buyers but needs operational cleanup. Strong market potential, weak execution.',                           accent: GO, bg: CR },
+  ];
+
+  return (
+    <section id="v2-quadrant" style={sectionStyle}>
+      <div style={inner}>
+        <div style={{ marginBottom: '3rem', maxWidth: 640 }}>
+          <span style={eyebrow}>The Saleability Quadrant</span>
+          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
+            Where Does Your Business Sit?
+          </h2>
+          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8 }}>
+            The quadrant maps every business on two axes:{' '}
+            <strong style={{ color: MA }}>Readiness to Sell</strong> (operational maturity, team depth, clean financials) against{' '}
+            <strong style={{ color: MA }}>Attractiveness to Buyers</strong> (growth potential, competitive advantage, low risk). Your position determines your advisory pathway.
+          </p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', maxWidth: 700, border: `1px solid ${BD}`, borderRadius: 8, overflow: 'hidden' }}>
+          {cells.map((c, i) => (
+            <div key={c.name} style={{
+              background: c.bg, padding: '2rem',
+              borderBottom: i < 2 ? `1px solid ${BD}` : 'none',
+              borderRight: i % 2 === 0 ? `1px solid ${BD}` : 'none',
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                <span style={{ display: 'inline-block', background: c.accent, color: CR, fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.25rem 0.75rem', borderRadius: 20 }}>
+                  {c.name}
+                </span>
+                <span style={{ fontFamily: serif, fontSize: '1rem', fontWeight: 700, color: c.accent }}>{c.score}</span>
+              </div>
               <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.65, margin: 0 }}>{c.desc}</p>
             </div>
           ))}
         </div>
-
         <div style={{ display: 'flex', gap: '3rem', marginTop: '1.25rem', paddingLeft: '1rem', flexWrap: 'wrap' }}>
-          <span style={{ fontFamily: sans, fontSize: '0.75rem', color: TM }}>↑ High Market Appeal (top row)</span>
-          <span style={{ fontFamily: sans, fontSize: '0.75rem', color: TM }}>→ High Operational Readiness (right column)</span>
+          <span style={{ fontFamily: sans, fontSize: '0.75rem', color: TM }}>↑ High Attractiveness to Buyers (top row)</span>
+          <span style={{ fontFamily: sans, fontSize: '0.75rem', color: TM }}>→ High Readiness to Sell (right column)</span>
         </div>
-
-        <div style={{ marginTop: '2.5rem', padding: '1.5rem 2rem', border: `1px solid ${BD}`, borderRadius: 8, maxWidth: 680, background: '#FBF8F3' }}>
+        <div style={{ marginTop: '2.5rem', padding: '1.5rem 2rem', border: `1px solid ${BD}`, borderRadius: 8, maxWidth: 700, background: '#FBF8F3' }}>
           <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.7, margin: 0 }}>
-            <strong style={{ color: MA }}>Not sure which quadrant you&apos;re in?</strong> Book a confidential Saleability Score™ assessment and find out exactly where your business stands — and what it will take to reach Highly Saleable.
+            <strong style={{ color: MA }}>Not sure which quadrant you&apos;re in?</strong> Book a confidential Saleability Score™ assessment and find out exactly where your business stands — and what it will take to reach Ideal Sale.
           </p>
           <a href="#v2-contact" style={{ display: 'inline-block', marginTop: '1rem', fontFamily: sans, fontSize: '0.8rem', fontWeight: 600, color: MA, textDecoration: 'none', borderBottom: `1px solid ${MA}` }}>
             Book your assessment →
@@ -309,56 +414,55 @@ function SaleabilityQuadrant() {
   );
 }
 
-// ─── Pricing ─────────────────────────────────────────────────────────────────
+// ─── Section 7: Pricing ──────────────────────────────────────────────────────
 function Pricing() {
   const tiers = [
     {
       subtitle: 'Top Quadrant Businesses',
-      name:     'Highly Saleable',
-      price:    '10% Success Fee',
-      desc:     'For businesses already scoring in the Highly Saleable quadrant. No upfront fee — fully aligned incentives throughout.',
+      name: 'Highly Saleable',
+      price: '10% Success Fee',
+      desc: 'For businesses scoring in the Highly Saleable quadrant of our Saleability Score™ framework.',
       features: ['Full deal management & execution', 'Buyer identification & outreach', 'Negotiation & term optimisation', 'No upfront fee — pay on success'],
-      cta:      'Book a Discovery Call',
+      cta: 'Book a Discovery Call',
       featured: false,
     },
     {
       subtitle: 'Most Common',
-      name:     'Strategic Fix',
-      price:    'SGD 7,000',
-      desc:     'For businesses in the Strategic Fix quadrant needing targeted improvement before going to market.',
-      features: ['Saleability improvement roadmap', 'Operational improvements', 'AI & digital positioning strategy', 'Pricing strategy & revenue optimisation'],
-      cta:      'Start Your Exit Journey',
+      name: 'Strategic Fix',
+      price: 'SGD 7,000',
+      desc: 'For businesses in the Strategic Fix quadrant needing targeted improvement before going to market.',
+      features: ['Saleability improvement roadmap', 'Operational improvements (cost & process)', 'AI & digital positioning strategy', 'Pricing strategy & revenue optimisation'],
+      cta: 'Start Your Exit Journey',
       featured: true,
     },
     {
       subtitle: 'Aligned Incentives',
-      name:     'Fee Adjustment',
-      price:    'Offset on Exit',
-      desc:     'The SGD 7,000 consultancy fee is credited back against the final success fee upon a successful sale.',
+      name: 'Fee Adjustment',
+      price: 'Offset on Exit',
+      desc: 'Upon successful sale, the $7,000 consultancy payments are offset against the final success fee.',
       features: ['Full success fee applies on exit', 'Consultancy fee credited back', 'We win when you win', 'No double-billing, ever'],
-      cta:      'Learn More',
+      cta: 'Learn More',
       featured: false,
     },
   ];
   return (
-    <section id="v2-pricing" style={sectionWrap}>
+    <section id="v2-pricing" style={sectionStyle}>
       <div style={inner}>
         <div style={{ marginBottom: '3.5rem', maxWidth: 600 }}>
           <span style={eyebrow}>Pricing Model</span>
-          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2 }}>
+          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
             Value-Aligned Fees
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, marginTop: '0.875rem', lineHeight: 1.8 }}>
+          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8 }}>
             Pay more only when you win more. Our fees are structured so our incentives are always aligned with yours.
           </p>
         </div>
-
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', alignItems: 'start' }}>
           {tiers.map(t => (
             <div key={t.name} style={{ padding: '2rem', border: t.featured ? `2px solid ${MA}` : `1px solid ${BD}`, borderRadius: 8, background: t.featured ? '#FBF8F3' : CR, position: 'relative' }}>
               {t.featured && (
                 <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: MA, color: GL, fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.25rem 1rem', borderRadius: 20, whiteSpace: 'nowrap' }}>
-                  Recommended
+                  Most Common
                 </div>
               )}
               <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{t.subtitle}</p>
@@ -379,50 +483,51 @@ function Pricing() {
             </div>
           ))}
         </div>
-
-        <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, marginTop: '2rem', lineHeight: 1.7 }}>
-          Aligned incentives — we win when you win. Let&apos;s discuss which pathway fits your current Saleability Score™ and timeline.
+        <p style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: MA, marginTop: '2rem', fontStyle: 'italic' }}>
+          Aligned incentives — we win when you win.
         </p>
       </div>
     </section>
   );
 }
 
-// ─── Who We Serve ────────────────────────────────────────────────────────────
+// ─── Section 8: Who We Serve ─────────────────────────────────────────────────
 function WhoWeServe() {
   const segs = [
     {
       label: 'Primary Audience',
       title: 'Founder-Owners',
-      sub:   'Age 40–70 · EBITDA SGD 500K–10M',
-      desc:  'Baby Boomers and Gen X founders in professional services, agencies, retail, consulting, and SMEs with a 1–3 year exit horizon.',
+      sub: 'Age 40–70 · EBITDA SGD 500K–10M',
+      desc: 'Baby Boomers and Gen X founders in professional services, agencies, retail, consulting, and SMEs with a 1–3 year exit horizon.',
       needs: ['Higher exit valuation', 'Reduced personal risk', 'Legacy preservation', 'Clear succession planning'],
     },
     {
       label: 'Secondary Audience',
       title: 'Growth-Stage Founders',
-      sub:   'Age 30–50 · Digital & Scalable',
-      desc:  'Digital, e-commerce, or scalable service businesses considering partial exits or strategic partnerships.',
+      sub: 'Age 30–50 · Digital & Scalable',
+      desc: 'Digital, e-commerce, or scalable service businesses considering partial exits or strategic partnerships.',
       needs: ['Digital or scalable business model', 'Partial exit or strategic partnership', 'Growth capital via sale', 'Retain operational involvement'],
     },
     {
       label: 'Buyers',
       title: 'Strategic Buyers & Family Offices',
-      sub:   'Acquisition-Ready',
-      desc:  'Looking for well-prepared, low-risk acquisitions with professionalised operations and strong management teams.',
+      sub: 'Acquisition-Ready',
+      desc: 'Looking for well-prepared, low-risk acquisitions with professionalised operations.',
       needs: ['Vetted, deal-ready businesses', 'Professionalised operations', 'Low integration risk', 'Strong management teams'],
     },
   ];
   return (
-    <section id="v2-serve" style={sectionWrap}>
+    <section id="v2-serve" style={sectionStyle}>
       <div style={{ ...inner, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'start' }}>
-        {/* Left: segment list */}
         <div>
           <span style={eyebrow}>Who We Serve</span>
-          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '2.5rem' }}>
+          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
             Built for Founders at Every Stage of Exit
           </h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0' }}>
+          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem' }}>
+            From Baby Boomer business owners approaching retirement to growth-stage founders considering strategic partnerships.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             {segs.map((s, i) => (
               <div key={s.title} style={{ paddingBottom: '2rem', marginBottom: '2rem', borderBottom: i < segs.length - 1 ? `1px solid ${BD}` : 'none' }}>
                 <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.25rem' }}>{s.label}</p>
@@ -438,8 +543,6 @@ function WhoWeServe() {
             ))}
           </div>
         </div>
-
-        {/* Right: photo + note */}
         <div style={{ position: 'sticky', top: 80 }}>
           <img src={PH.serve} alt="Founders we serve" loading="lazy"
             style={{ width: '100%', height: 560, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
@@ -455,29 +558,30 @@ function WhoWeServe() {
   );
 }
 
-// ─── Vision & Values ─────────────────────────────────────────────────────────
+// ─── Section 9: Vision & Values ──────────────────────────────────────────────
 function VisionValues() {
+  const milestones = [
+    'Recognised market leader in strategic exits for SMEs',
+    'Premium brand with selective, high-value mandates',
+    'Platformised advisory framework scalable across markets',
+  ];
   const values = [
-    { title: 'Founder-first Thinking',          desc: 'We protect the interests, legacy, and future of business owners — not just the transaction.' },
-    { title: 'Strategic Rigour',                desc: 'Every exit is driven by data, positioning, and long-term value creation, not guesswork.' },
-    { title: 'Confidentiality Without Compromise', desc: 'Confidentiality is embedded into every process, decision, and communication.' },
-    { title: 'Value Before Velocity',           desc: 'We prioritise maximising long-term value over rushing transactions.' },
-    { title: 'Global Perspective',              desc: 'We think cross-border, cross-industry, and cross-cycle.' },
+    { roman: 'I',   title: 'Founder-First Thinking', desc: 'We protect the interests, legacy, and future of business owners — not just the transaction.' },
+    { roman: 'II',  title: 'Strategic Rigour',        desc: 'Every exit is driven by data, positioning, and long-term value creation, not guesswork.' },
+    { roman: 'III', title: 'Confidentiality',         desc: 'Embedded into every process, decision, and communication without compromise.' },
+    { roman: 'IV',  title: 'Value Before Velocity',   desc: 'We prioritise maximising long-term value over rushing transactions.' },
+    { roman: 'V',   title: 'Global Perspective',      desc: 'We think cross-border, cross-industry, and cross-cycle — connecting the right buyers globally.' },
   ];
   return (
-    <section id="v2-values" style={sectionWrap}>
+    <section id="v2-values" style={sectionStyle}>
       <div style={{ ...inner, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'start' }}>
-        {/* Left: photo */}
         <img src={PH.values} alt="ExitPath values" loading="lazy"
-          style={{ width: '100%', height: 540, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
-
-        {/* Right: content */}
+          style={{ width: '100%', height: 560, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
         <div>
-          <span style={eyebrow}>Why We Exist</span>
+          <span style={eyebrow}>About ExitPath</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '2rem' }}>
-            Ownership to Opportunity
+            Why We Exist
           </h2>
-
           <div style={{ marginBottom: '1.25rem' }}>
             <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '0.62rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: MA, marginBottom: '0.375rem' }}>OUR VISION</p>
             <p style={{ fontFamily: sans, fontSize: '0.925rem', color: TM, lineHeight: 1.75 }}>To become the most trusted global exit advisory for founders navigating their most important transition.</p>
@@ -486,12 +590,21 @@ function VisionValues() {
             <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '0.62rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: MA, marginBottom: '0.375rem' }}>OUR MISSION</p>
             <p style={{ fontFamily: sans, fontSize: '0.925rem', color: TM, lineHeight: 1.75 }}>To help founders exit with clarity, confidence, and maximum value by transforming businesses into investor-ready assets.</p>
           </div>
-
-          <p style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: MA, marginBottom: '1.25rem' }}>Values</p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <div style={{ marginBottom: '2rem', paddingBottom: '2rem', borderBottom: `1px solid ${BD}` }}>
+            <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '0.62rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: MA, marginBottom: '0.875rem' }}>GROWTH VISION</p>
+            <p style={{ fontFamily: serif, fontSize: '1.1rem', fontWeight: 600, color: MA, marginBottom: '0.875rem' }}>Building the World&apos;s Most Trusted Exit Advisory</p>
+            {milestones.map(m => (
+              <div key={m} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                <span style={{ color: GO, fontWeight: 700, flexShrink: 0 }}>→</span>
+                <span style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.6 }}>{m}</span>
+              </div>
+            ))}
+          </div>
+          <p style={{ fontFamily: serif, fontSize: '1.35rem', fontWeight: 700, color: MA, marginBottom: '1.25rem' }}>Values</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
             {values.map(v => (
-              <div key={v.title} style={{ display: 'flex', gap: '0.875rem', alignItems: 'flex-start' }}>
-                <span style={{ color: GO, fontSize: '1.05rem', fontWeight: 700, flexShrink: 0, marginTop: 2 }}>→</span>
+              <div key={v.roman} style={{ display: 'flex', gap: '0.875rem', alignItems: 'flex-start' }}>
+                <span style={{ fontFamily: serif, fontSize: '1rem', fontWeight: 700, color: GO, flexShrink: 0, minWidth: 22 }}>{v.roman}</span>
                 <div>
                   <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '0.925rem', color: MA, marginBottom: '0.2rem' }}>{v.title}</p>
                   <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.65 }}>{v.desc}</p>
@@ -505,65 +618,41 @@ function VisionValues() {
   );
 }
 
-// ─── Proof ───────────────────────────────────────────────────────────────────
+// ─── Section 10: Brand Promise Proof ────────────────────────────────────────
 function Proof() {
   const cards = [
     {
       label: 'Tangible',
-      title: 'Real Value, Before the Sale',
-      accent: MA,
-      points: [
-        'Saleability Score™ improvement across 6 dimensions',
-        '10–20% revenue growth strategies implemented',
-        'Operational cost reductions that increase EBITDA',
-        'AI & digital positioning that attracts premium buyers',
-      ],
+      title: 'Measurable Improvements Before the Sale',
+      body: 'We target 10–20% revenue growth pre-sale, which translates to a multiplied boost in sale price given typical EBITDA valuation multiples. Measurable improvements to revenue, cost, and operations before going to market.',
     },
     {
       label: 'Measurable',
-      title: 'Numbers You Can Take to Market',
-      accent: GO,
-      points: [
-        '30-point diagnostic with clear scoring',
-        'Revenue improvement benchmarks tied to deal value',
-        'Cost-to-value ratio tracked throughout',
-        'Exit multiple improvement documented',
-      ],
+      title: 'The Saleability Score™ Quantifies It',
+      body: 'The Saleability Score™ quantifies exactly where value is being created or lost across 30 data points and 6 strategic dimensions. Every recommendation is grounded in data, not opinion.',
     },
     {
       label: 'Defensible',
-      title: 'Built to Withstand Due Diligence',
-      accent: GL,
-      points: [
-        'Buyer-ready information memoranda',
-        'Cleaned and organised financial records',
-        'Documented operational processes & SOPs',
-        'Management team continuity plans',
-      ],
+      title: 'Zero Brokers Offer This Level of Depth',
+      body: 'Every recommendation is grounded in data, not opinion or generic advice. Zero brokers in Singapore offer this level of diagnostic depth before listing.',
     },
   ];
+  const accents = [MA, GO, GL];
   return (
-    <section id="v2-proof" style={sectionWrap}>
+    <section id="v2-proof" style={sectionStyle}>
       <div style={inner}>
         <div style={{ marginBottom: '3.5rem', maxWidth: 600 }}>
-          <span style={eyebrow}>The ExitPath Difference</span>
+          <span style={eyebrow}>Why Clients Choose ExitPath</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2 }}>
-            Our Promise in Practice
+            Our promise is tangible, measurable, and defensible.
           </h2>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
-          {cards.map(c => (
-            <div key={c.label} style={{ padding: '2rem', border: `1px solid ${BD}`, borderRadius: 8, borderTop: `3px solid ${c.accent}` }}>
+          {cards.map((c, i) => (
+            <div key={c.label} style={{ padding: '2rem', border: `1px solid ${BD}`, borderRadius: 8, borderTop: `3px solid ${accents[i]}` }}>
               <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{c.label}</p>
-              <h3 style={{ fontFamily: serif, fontSize: '1.3rem', fontWeight: 700, color: MA, marginBottom: '1.25rem', lineHeight: 1.3 }}>{c.title}</h3>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
-                {c.points.map(pt => (
-                  <li key={pt} style={{ display: 'flex', gap: '0.625rem', alignItems: 'flex-start' }}>
-                    <span style={{ color: GO, fontWeight: 700, flexShrink: 0 }}>→</span>
-                    <span style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.65 }}>{pt}</span>
-                  </li>
-                ))}
-              </ul>
+              <h3 style={{ fontFamily: serif, fontSize: '1.3rem', fontWeight: 700, color: MA, marginBottom: '1rem', lineHeight: 1.3 }}>{c.title}</h3>
+              <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.75 }}>{c.body}</p>
             </div>
           ))}
         </div>
@@ -572,9 +661,29 @@ function Proof() {
   );
 }
 
-// ─── Contact ─────────────────────────────────────────────────────────────────
+// ─── Section 11: CTA ─────────────────────────────────────────────────────────
+function CTA() {
+  return (
+    <section style={{ ...sectionStyle, textAlign: 'center' }}>
+      <div style={{ ...inner, maxWidth: 700, margin: '0 auto' }}>
+        <span style={eyebrow}>Ready to Begin?</span>
+        <h2 style={{ fontFamily: serif, fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1.25rem' }}>
+          Ready to Find Out What Your Business Is Really Worth?
+        </h2>
+        <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem' }}>
+          Book a confidential discovery call. We&apos;ll run your Saleability Score™ and show you exactly where value is being left on the table.
+        </p>
+        <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '1rem 2.5rem', borderRadius: 4, textDecoration: 'none', display: 'inline-block' }}>
+          Book a Discovery Call
+        </a>
+      </div>
+    </section>
+  );
+}
+
+// ─── Section 12: Contact ─────────────────────────────────────────────────────
 function Contact() {
-  const [form, setForm]   = useState({ firstName: '', email: '', message: '' });
+  const [form, setForm]     = useState({ fullName: '', email: '', phone: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -584,7 +693,7 @@ function Contact() {
       const r = await fetch('/api/subscribe', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ firstName: form.firstName, email: form.email }),
+        body:    JSON.stringify({ firstName: form.fullName.split(' ')[0], email: form.email }),
       });
       if (!r.ok) throw new Error();
       setStatus('sent');
@@ -593,29 +702,27 @@ function Contact() {
     }
   };
 
-  const inputStyle = {
+  const inputStyle: React.CSSProperties = {
     width: '100%', fontFamily: sans, fontSize: '0.9rem', color: TX,
     background: '#FBF8F3', border: `1px solid ${BD}`, borderRadius: 4,
-    padding: '0.75rem', outline: 'none', boxSizing: 'border-box' as const,
+    padding: '0.75rem', outline: 'none', boxSizing: 'border-box',
   };
-  const labelStyle = {
-    fontFamily: sans, fontSize: '0.72rem', fontWeight: 600 as const,
-    color: MA, display: 'block' as const, marginBottom: '0.375rem',
+  const labelStyle: React.CSSProperties = {
+    fontFamily: sans, fontSize: '0.72rem', fontWeight: 600,
+    color: MA, display: 'block', marginBottom: '0.375rem',
   };
 
   return (
-    <section id="v2-contact" style={sectionWrap}>
+    <section id="v2-contact" style={sectionStyle}>
       <div style={{ ...inner, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'start' }}>
-        {/* Left: form */}
         <div>
-          <span style={eyebrow}>Get in Touch</span>
+          <span style={eyebrow}>Get In Touch</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1rem' }}>
-            Ready to Find Out What Your Business Is Really Worth?
+            Start Your Exit Journey
           </h2>
           <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem' }}>
-            Book a confidential Saleability Score™ assessment. No commitment. No pressure. Just clarity on where you stand and what&apos;s possible.
+            Book a confidential discovery call. We&apos;ll run your Saleability Score™ and show you exactly where value is being left on the table.
           </p>
-
           {status === 'sent' ? (
             <div style={{ padding: '2rem', border: `1px solid ${GO}`, borderRadius: 8, background: '#FBF8F0' }}>
               <p style={{ fontFamily: sans, fontWeight: 700, color: MA, marginBottom: '0.5rem' }}>Message received.</p>
@@ -625,15 +732,20 @@ function Contact() {
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
-                  <label style={labelStyle}>First Name</label>
-                  <input type="text" required placeholder="Your name" value={form.firstName}
-                    onChange={e => setForm(f => ({ ...f, firstName: e.target.value }))} style={inputStyle} />
+                  <label style={labelStyle}>Full Name</label>
+                  <input type="text" required placeholder="Your full name" value={form.fullName}
+                    onChange={e => setForm(f => ({ ...f, fullName: e.target.value }))} style={inputStyle} />
                 </div>
                 <div>
                   <label style={labelStyle}>Email</label>
                   <input type="email" required placeholder="your@email.com" value={form.email}
                     onChange={e => setForm(f => ({ ...f, email: e.target.value }))} style={inputStyle} />
                 </div>
+              </div>
+              <div>
+                <label style={labelStyle}>Phone</label>
+                <input type="tel" placeholder="+65 xxxx xxxx" value={form.phone}
+                  onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} style={inputStyle} />
               </div>
               <div>
                 <label style={labelStyle}>Tell us about your business</label>
@@ -643,16 +755,17 @@ function Contact() {
               </div>
               <button type="submit" disabled={status === 'sending'}
                 style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 4, border: 'none', cursor: 'pointer', alignSelf: 'flex-start' }}>
-                {status === 'sending' ? 'Sending…' : 'Book Your Assessment'}
+                {status === 'sending' ? 'Sending…' : 'Book a Discovery Call'}
               </button>
               {status === 'error' && (
-                <p style={{ fontFamily: sans, fontSize: '0.875rem', color: '#C0392B' }}>Something went wrong. Please email us at <a href="mailto:consulting@kevindam.com" style={{ color: MA }}>consulting@kevindam.com</a></p>
+                <p style={{ fontFamily: sans, fontSize: '0.875rem', color: '#C0392B' }}>
+                  Something went wrong. Please email us at{' '}
+                  <a href="mailto:consulting@kevindam.com" style={{ color: MA }}>consulting@kevindam.com</a>
+                </p>
               )}
             </form>
           )}
         </div>
-
-        {/* Right: photo */}
         <img src={PH.contact} alt="Connect with ExitPath" loading="lazy"
           style={{ width: '100%', height: 580, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
       </div>
@@ -697,13 +810,8 @@ export default function Ver2Page() {
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
         @media (max-width: 768px) {
-          .hidden-mobile { display: none !important; }
-          .show-mobile   { display: flex  !important; }
-          .split-grid    { grid-template-columns: 1fr !important; gap: 2rem !important; }
-          .three-col     { grid-template-columns: 1fr !important; }
-        }
-        @media (min-width: 769px) {
-          .show-mobile { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+          nav { display: none !important; }
         }
       `}</style>
       <div style={{ background: CR, fontFamily: sans, color: TX, overflowX: 'hidden' }}>
@@ -711,13 +819,15 @@ export default function Ver2Page() {
         <main>
           <Hero />
           <BrandPromise />
-          <MarketGap />
+          <MarketPosition />
+          <Differentiators />
           <Approach />
           <SaleabilityQuadrant />
           <Pricing />
           <WhoWeServe />
           <VisionValues />
           <Proof />
+          <CTA />
           <Contact />
         </main>
         <Footer />
