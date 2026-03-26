@@ -34,7 +34,7 @@ const ProcessStep = ({
       )}
 
       {/* Step Card */}
-      <div className="relative z-10 w-full md:w-80 bg-white border border-border rounded-2xl p-8 text-center hover:border-gold/50 transition-colors duration-300">
+      <div className="relative z-10 w-full bg-white border border-border rounded-2xl p-5 text-center hover:border-gold/50 transition-colors duration-300">
         <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-maroon border-4 border-gold rounded-full flex items-center justify-center">
           <span className="text-cream font-bold text-lg">{step}</span>
         </div>
@@ -132,7 +132,7 @@ export default function Process() {
         </motion.div>
 
         {/* Process Steps Timeline */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-3">
           {steps.map((step) => (
             <ProcessStep key={step.step} {...step} />
           ))}

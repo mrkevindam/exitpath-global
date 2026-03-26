@@ -94,52 +94,50 @@ const PricingTier = ({
 export default function Pricing() {
   const tiers: PricingTierProps[] = [
     {
-      name: 'Discovery',
-      subtitle: 'For Curious Founders',
-      price: 'Complimentary',
-      description: 'Understand where you stand with a no-pressure assessment of your exit readiness.',
+      name: 'Highly Saleable',
+      subtitle: 'Top Quadrant Businesses',
+      price: '10% Success Fee',
+      description:
+        'For businesses scoring in the Highly Saleable quadrant of our Saleability Score™ framework.',
       features: [
-        'Saleability Score™ evaluation',
-        'Competitive positioning snapshot',
-        'Value-unlock opportunities identified',
-        'No commitment, zero fees',
+        'Full deal management & execution',
+        'Buyer identification & outreach',
+        'Negotiation & term optimisation',
+        'No upfront fee — pay on success',
       ],
-      cta: 'Book Your Assessment',
+      cta: 'Book a Discovery Call',
       featured: false,
       delay: 0,
     },
     {
-      name: 'Exit Acceleration',
-      subtitle: 'For Serious Founders',
-      price: 'Performance-Based',
+      name: 'Strategic Fix',
+      subtitle: 'Most Common',
+      price: 'SGD 7,000',
       description:
-        'Full end-to-end exit preparation and execution. Aligned incentives — we succeed when you succeed.',
+        'For businesses in the Strategic Fix quadrant needing targeted improvement before going to market.',
       features: [
-        'Complete Saleability Score™ diagnostic',
-        'Customized value-unlock roadmap',
-        'Full pre-sale optimization execution',
-        'Buyer sourcing from 500+ network',
-        'Deal negotiation & structuring',
-        'Close support & transition',
+        'Saleability improvement roadmap',
+        'Operational improvements (cost & process)',
+        'AI & digital positioning strategy',
+        'Pricing strategy & revenue optimisation',
       ],
       cta: 'Start Your Exit Journey',
       featured: true,
       delay: 0.1,
     },
     {
-      name: 'Advisory',
-      subtitle: 'For Hands-On Founders',
-      price: 'Fee-Based',
-      description: 'Retain us as your exclusive exit advisor while you maintain day-to-day control.',
+      name: 'Fee Adjustment',
+      subtitle: 'Aligned Incentives',
+      price: 'Offset on Exit',
+      description:
+        'Upon successful sale, the SGD 7,000 consultancy payments are offset against the final success fee.',
       features: [
-        'Dedicated senior advisor assigned',
-        'Saleability Score™ framework & tooling',
-        'Quarterly strategic reviews',
-        'Access to buyer network as needed',
-        'Deal evaluation & structuring support',
-        'Ongoing operational coaching',
+        'Full success fee applies on exit',
+        'Consultancy fee credited back',
+        'We win when you win',
+        'No double-billing, ever',
       ],
-      cta: 'Explore Advisory',
+      cta: 'Learn More',
       featured: false,
       delay: 0.2,
     },
@@ -159,14 +157,13 @@ export default function Pricing() {
           className="text-center mb-20"
         >
           <p className="text-gold text-xs font-semibold uppercase tracking-widest mb-4">
-            Transparent, Aligned Economics
+            Pricing Model
           </p>
           <h2 className="text-5xl md:text-6xl font-heading font-bold text-maroon mb-6">
-            Three Models. One Goal: Your Maximum Value.
+            Value-Aligned Fees
           </h2>
           <p className="text-lg text-slate-ep max-w-3xl mx-auto">
-            Whether you want a quick assessment, full exit execution, or ongoing advisory support, we have a model
-            that aligns our success with yours.
+            Pay more only when you win more. Our fees are structured so our incentives are always aligned with yours.
           </p>
         </motion.div>
 
@@ -186,8 +183,7 @@ export default function Pricing() {
           className="text-center"
         >
           <p className="text-lg text-slate-ep max-w-3xl mx-auto">
-            All engagements include complete confidentiality, zero employee/client disruption, and a dedicated senior
-            advisor. Let's discuss which model fits your timeline and situation best.
+            Aligned incentives — we win when you win. Let&apos;s discuss which pathway fits your current Saleability Score™ and timeline.
           </p>
         </motion.div>
       </div>

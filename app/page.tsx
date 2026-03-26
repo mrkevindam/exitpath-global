@@ -4,12 +4,13 @@ import Hero from '@/components/sections/Hero';
 import BrandPromise from '@/components/sections/BrandPromise';
 import MarketPosition from '@/components/sections/MarketPosition';
 import Differentiators from '@/components/sections/Differentiators';
-import SaleabilityQuadrant from '@/components/sections/SaleabilityQuadrant';
 import Approach from '@/components/sections/Approach';
+import SaleabilityQuadrant from '@/components/sections/SaleabilityQuadrant';
 import Pricing from '@/components/sections/Pricing';
 import WhoWeServe from '@/components/sections/WhoWeServe';
+import VisionValues from '@/components/sections/VisionValues';
 import Proof from '@/components/sections/Proof';
-import Process from '@/components/sections/Process';
+import CTASection from '@/components/sections/CTASection';
 import EmailOptIn from '@/components/sections/EmailOptIn';
 import Contact from '@/components/sections/Contact';
 
@@ -22,13 +23,14 @@ export default function Home() {
         <BrandPromise />
         <MarketPosition />
         <Differentiators />
-        <SaleabilityQuadrant />
         <Approach />
+        <SaleabilityQuadrant />
         <Pricing />
         <WhoWeServe />
+        <VisionValues />
         <Proof />
+        <CTASection />
         <EmailOptIn />
-        <Process />
         <Contact />
       </main>
       <Footer />

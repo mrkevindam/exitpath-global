@@ -42,9 +42,9 @@ export default function MarketPosition() {
             We Occupy the Gap Nobody Else Fills
           </h2>
           <p className="text-lg text-slate-ep max-w-3xl mx-auto">
-            The $1M-$10M EBITDA space is underserved. Traditional brokers chase mega-deals, family
-            offices are passive, and accountants aren't equipped to unlock true exit value. We fill
-            the gap with founder-centric, saleability-driven exit preparation.
+            The SME exit market is saturated with generalist brokers competing on buyer databases and deal speed.
+            ExitPath operates in the underserved, high-value space. Main Street brokers focus on $50K–$5M deals.
+            M&A advisors focus on $5M+. The $1M–$10M range with value-improvement positioning is white space that nobody owns.
           </p>
         </motion.div>
 

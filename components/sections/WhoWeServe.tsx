@@ -56,82 +56,43 @@ const Segment = ({
 export default function WhoWeServe() {
   const segments: SegmentProps[] = [
     {
-      icon: '🚀',
-      title: 'Bootstrapped Founders',
+      icon: '👔',
+      title: 'Founder-Owners',
       description:
-        'Built something from nothing. Bootstrapped your way to $1M-$10M EBITDA. Now you want off the hamster wheel with maximum value realized.',
+        'Age 40–70 | EBITDA SGD 500K–10M. Baby boomers and Gen X founders in professional services, agencies, retail, consulting, and SMEs with a 1–3 year exit horizon.',
       characteristics: [
-        'Sole or co-founder structure',
-        'Organic growth trajectory',
-        'Minimal external funding',
-        'Ready for strategic next chapter',
+        'Higher exit valuation',
+        'Reduced personal risk',
+        'Legacy preservation',
+        'Clear succession planning',
       ],
       delay: 0,
     },
     {
-      icon: '📊',
-      title: 'PE-Backed Founders',
+      icon: '🚀',
+      title: 'Growth-Stage Founders',
       description:
-        'Took institutional capital, scaled fast, hit your targets. Now looking for a natural exit while relationships remain strong and timing is perfect.',
+        'Age 30–50 | Digital & Scalable. Digital, e-commerce, or scalable service businesses considering partial exits or strategic partnerships.',
       characteristics: [
-        'Portfolio company executives',
-        'Clear exit windows approaching',
-        'Institutional alignment needed',
-        'Secondary transaction ready',
+        'Digital or scalable business model',
+        'Partial exit or strategic partnership',
+        'Growth capital via sale',
+        'Retain operational involvement',
       ],
       delay: 0.1,
     },
     {
-      icon: '👨‍💼',
-      title: 'Professional Operators',
+      icon: '🏦',
+      title: 'Strategic Buyers & Family Offices',
       description:
-        `Built a business you're proud of. Not an overnight success, but a stable, profitable, scalable operation. Looking for the right buyer and the right price.`,
+        'Acquisition-Ready. Looking for well-prepared, low-risk acquisitions with professionalised operations.',
       characteristics: [
+        'Vetted, deal-ready businesses',
+        'Professionalised operations',
+        'Low integration risk',
         'Strong management teams',
-        'Documented processes',
-        'Consistent profitability',
-        'Strategic buyer appeal',
       ],
       delay: 0.2,
-    },
-    {
-      icon: '🌏',
-      title: 'Asia-Pacific Businesses',
-      description:
-        'Operating across Singapore, Malaysia, Thailand, Indonesia, or beyond. Seeking buyers who understand the region and can take you regional or global.',
-      characteristics: [
-        'Multi-country operations',
-        'Regional market expertise',
-        'Cross-border buyer networks',
-        'Growth beyond home market',
-      ],
-      delay: 0.3,
-    },
-    {
-      icon: '⚙️',
-      title: 'B2B Services & Software',
-      description:
-        `Whether consulting, managed services, SaaS, or software development—you've built recurring revenue and proven unit economics. The market wants what you have.`,
-      characteristics: [
-        'Recurring revenue models',
-        'Scalable infrastructure',
-        'Institutional buyer interest',
-        'Clear revenue mechanics',
-      ],
-      delay: 0.4,
-    },
-    {
-      icon: '🏪',
-      title: 'E-Commerce & Retail',
-      description:
-        'Built a brand, customer base, and supply chain that buyers covet. Strategic acquirers are actively hunting companies like yours in your category.',
-      characteristics: [
-        'Established customer acquisition',
-        'Branded product/service',
-        'Scalable fulfillment',
-        'Multiple buyer personas',
-      ],
-      delay: 0.5,
     },
   ];
 
@@ -149,19 +110,18 @@ export default function WhoWeServe() {
           className="text-center mb-16"
         >
           <p className="text-gold text-xs font-semibold uppercase tracking-widest mb-4">
-            Our Ideal Founders
+            Who We Serve
           </p>
           <h2 className="text-5xl md:text-6xl font-heading font-bold text-maroon mb-6">
-            We Work With Founders Who've Built Real Businesses
+            Built for Founders at Every Stage of Exit
           </h2>
           <p className="text-lg text-slate-ep max-w-3xl mx-auto">
-            Whether you bootstrapped, took funding, scaled across borders, or built something niche—if
-            your business is profitable, scalable, and attractive to buyers, we can help you win an exit.
+            From Baby Boomer business owners approaching retirement to growth-stage founders considering strategic partnerships.
           </p>
         </motion.div>
 
         {/* Segments Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {segments.map((segment) => (
             <Segment key={segment.title} {...segment} />
           ))}

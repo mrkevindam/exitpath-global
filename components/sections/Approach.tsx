@@ -87,40 +87,42 @@ export default function Approach() {
   const blocks: ApproachBlockProps[] = [
     {
       step: 1,
-      title: 'Diagnose',
+      title: 'Saleability Score™ Diagnostic',
       description:
-        'We deeply understand your business — not just financials, but operations, culture, buyer appeal, and hidden risks.',
+        'Proprietary 30-point scoring model across 6 strategic dimensions to assess sale readiness and identify value gaps. The score tells you whether you are ready to go to market, or whether targeted improvements will unlock meaningfully higher valuations.',
       points: [
-        'Saleability Score™ assessment across 30 criteria',
-        'Competitive positioning analysis',
-        'Risk and liability audit',
-        'Buyer attractiveness evaluation',
+        'Financial Clarity',
+        'Revenue Quality',
+        'Operational Maturity',
+        'Digital Readiness',
+        'Management Depth',
+        'Market Position',
       ],
       icon: '🔍',
       isReverse: false,
     },
     {
       step: 2,
-      title: 'Prepare',
+      title: 'Revenue & Digital Excellence',
       description:
-        'We architect a precise, phased roadmap to systematically unlock hidden value before market entry.',
+        'Drive 10-20% revenue growth and eliminate operational inefficiencies before going to market. Modernise your digital footprint with AI-driven improvements to appeal to sophisticated buyers. The market already accepts performance-aligned fee structures for deals in the $1M-$100M range.',
       points: [
-        'Custom value-unlock strategy',
-        'Financial optimization roadmap',
-        'Operational efficiency program',
-        'Documentation and governance hardening',
+        'Revenue optimisation strategy',
+        'Cost and process efficiency',
+        'AI & digital positioning',
+        'Pricing strategy improvement',
       ],
-      icon: '📋',
+      icon: '📈',
       isReverse: true,
     },
     {
       step: 3,
-      title: 'Execute',
+      title: 'Strategic Execution & Expertise',
       description:
-        'You run your business; we manage the exit. Full confidentiality, precise buyer matching, and deal closure.',
+        'Precision targeting of strategic acquirers, family offices, and growth investors with full confidentiality management. Specialist in agencies, consulting firms, and digital SMEs where operational maturity is the key value multiplier.',
       points: [
         'Buyer sourcing from 500+ network',
-        'Process management and NDAs',
+        'Controlled exposure & NDA management',
         'Negotiation and deal structuring',
         'Close support and transition',
       ],
@@ -143,13 +145,13 @@ export default function Approach() {
           className="text-center mb-20"
         >
           <p className="text-gold text-xs font-semibold uppercase tracking-widest mb-4">
-            Our Methodology
+            Our Approach
           </p>
           <h2 className="text-5xl md:text-6xl font-heading font-bold text-maroon mb-6">
-            Three Phases to Exit Excellence
+            Saleability-First. Value-Driven.
           </h2>
           <p className="text-lg text-slate-ep max-w-3xl mx-auto">
-            A structured, predictable pathway from readiness assessment through successful close.
+            ExitPath is an advisory built on value creation, not just deal execution.
           </p>
         </motion.div>
 
