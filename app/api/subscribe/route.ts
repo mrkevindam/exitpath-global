@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Kit public form ID — no API key needed for subscriptions
 const KIT_FORM_ID = '9250037'
 
 export async function POST(req: NextRequest) {
@@ -10,27 +11,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Valid email required' }, { status: 400 })
     }
 
-    const apiKey = process.env.CONVERTKIT_API_KEY
-    if (!apiKey) {
-      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 })
-    }
+    // Use Kit's public subscription endpoint — no auth required
+    const params = new URLSearchParams({ email_address: email })
+    if (firstName) params.append('first_name', firstName)
 
-    const res = await fetch(`https://api.kit.com/v4/forms/${KIT_FORM_ID}/subscribers`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        email_address: email,
-        ...(firstName ? { first_name: firstName } : {}),
-      }),
-    })
+    const res = await fetch(
+      `https://app.convertkit.com/forms/${KIT_FORM_ID}/subscriptions`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params.toString(),
+      }
+    )
 
     if (!res.ok) {
-      const err = await res.json()
-      console.error('Kit API error:', err)
+      const text = await res.text()
+      console.error('Kit subscribe error:', res.status, text)
       return NextResponse.json({ error: 'Subscription failed' }, { status: 500 })
     }
 
