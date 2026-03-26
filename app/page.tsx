@@ -10,6 +10,7 @@ import Pricing from '@/components/sections/Pricing';
 import WhoWeServe from '@/components/sections/WhoWeServe';
 import Proof from '@/components/sections/Proof';
 import Process from '@/components/sections/Process';
+import EmailOptIn from '@/components/sections/EmailOptIn';
 import Contact from '@/components/sections/Contact';
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
         <Pricing />
         <WhoWeServe />
         <Proof />
+        <EmailOptIn />
         <Process />
         <Contact />
       </main>
