@@ -14,14 +14,6 @@ const BD = '#DDD6C8';
 const serif = "'Cormorant Garamond', Georgia, serif";
 const sans  = "'Jost', system-ui, sans-serif";
 
-// ─── Unsplash Photos ────────────────────────────────────────────────────────
-const PH = {
-  hero:    'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=900&q=80',
-  market:  'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=900&q=80',
-  serve:   'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=900&q=80',
-  values:  'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=900&q=80',
-  contact: 'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80',
-};
 
 // ─── Shared Styles ──────────────────────────────────────────────────────────
 const eyebrow: React.CSSProperties = {
@@ -72,7 +64,7 @@ function Header() {
           {links.map(l => (
             <a key={l.href} href={l.href} style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 500, color: scrolled ? TM : MA, textDecoration: 'none' }}>{l.label}</a>
           ))}
-          <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 600, color: CR, background: MA, padding: '0.5rem 1.25rem', borderRadius: 4, textDecoration: 'none' }}>
+          <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 600, color: CR, background: MA, padding: '0.5rem 1.25rem', borderRadius: 0, textDecoration: 'none' }}>
             Start a Conversation
           </a>
         </nav>
@@ -89,7 +81,7 @@ function Header() {
               style={{ fontFamily: sans, fontSize: '1rem', color: MA, textDecoration: 'none' }}>{l.label}</a>
           ))}
           <a href="#v2-contact" onClick={() => setOpen(false)}
-            style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '0.75rem', borderRadius: 4, textDecoration: 'none', textAlign: 'center' }}>
+            style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '0.75rem', borderRadius: 0, textDecoration: 'none', textAlign: 'center' }}>
             Start a Conversation
           </a>
         </div>
@@ -102,30 +94,22 @@ function Header() {
 function Hero() {
   return (
     <section style={{ background: CR, paddingTop: 104, paddingBottom: 80, paddingLeft: '2rem', paddingRight: '2rem' }}>
-      <div style={{ ...inner, ...split }}>
-        <div>
+      <div style={{ ...inner }}>
+        <div style={{ maxWidth: 720 }}>
           <span style={eyebrow}>Strategic Exit Advisory</span>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(2.4rem, 4vw, 3.4rem)', fontWeight: 700, color: MA, lineHeight: 1.1, marginBottom: '1.5rem' }}>
             <span style={{ color: GL }}>Exit</span>Path Global helps founders unlock the full value of their business.
           </h1>
-          <p style={{ fontFamily: sans, fontSize: '1.05rem', color: TM, lineHeight: 1.75, marginBottom: '2.5rem', maxWidth: 460 }}>
+          <p style={{ fontFamily: sans, fontSize: '1.05rem', color: TM, lineHeight: 1.75, marginBottom: '2.5rem', maxWidth: 520 }}>
             Clear preparation. Sharp positioning. Precise deal execution — delivered with global reach and total confidentiality.
           </p>
           <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-            <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 4, textDecoration: 'none' }}>
+            <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 0, textDecoration: 'none' }}>
               Start a Conversation
             </a>
-            <a href="#v2-approach" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 500, color: MA, padding: '0.875rem 2rem', border: `1px solid ${BD}`, borderRadius: 4, textDecoration: 'none' }}>
+            <a href="#v2-approach" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 500, color: MA, padding: '0.875rem 2rem', border: `1px solid ${BD}`, borderRadius: 0, textDecoration: 'none' }}>
               Our Approach →
             </a>
-          </div>
-        </div>
-        <div style={{ position: 'relative' }}>
-          <img src={PH.hero} alt="Strategic business advisory" loading="lazy"
-            style={{ width: '100%', height: 480, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
-          <div style={{ position: 'absolute', bottom: 28, left: -28, background: CR, borderRadius: 8, padding: '1rem 1.5rem', boxShadow: '0 4px 24px rgba(80,21,8,0.14)', border: `1px solid ${BD}` }}>
-            <p style={{ fontFamily: serif, fontSize: '1.75rem', fontWeight: 700, color: MA, margin: 0, lineHeight: 1 }}>30-pt</p>
-            <p style={{ fontFamily: sans, fontSize: '0.65rem', fontWeight: 600, color: TM, margin: 0, letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 4 }}>Saleability Score™</p>
           </div>
         </div>
       </div>
@@ -184,10 +168,8 @@ function MarketPosition() {
   ];
   return (
     <section style={sectionStyle}>
-      <div style={{ ...inner, ...split }}>
-        <img src={PH.market} alt="ExitPath advisory discussion" loading="lazy"
-          style={{ width: '100%', height: 500, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
-        <div>
+      <div style={{ ...inner }}>
+        <div style={{ maxWidth: 760 }}>
           <span style={eyebrow}>Market Position</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1.25rem' }}>
             Occupy the Gap Nobody Else Fills
@@ -198,7 +180,7 @@ function MarketPosition() {
             that nobody currently owns.
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-            <div style={{ padding: '1.25rem', background: '#EDE8DF', borderRadius: 8 }}>
+            <div style={{ padding: '1.25rem', background: '#EDE8DF', borderRadius: 0 }}>
               <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: TM, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.875rem' }}>
                 What Everyone Else Does
               </p>
@@ -209,7 +191,7 @@ function MarketPosition() {
                 </div>
               ))}
             </div>
-            <div style={{ padding: '1.25rem', background: '#FBF8F0', border: `1px solid ${GO}`, borderRadius: 8 }}>
+            <div style={{ padding: '1.25rem', background: '#FBF8F0', border: `1px solid ${GO}`, borderRadius: 0 }}>
               <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.875rem' }}>
                 ExitPath&apos;s Territory
               </p>
@@ -225,7 +207,6 @@ function MarketPosition() {
             Zero brokers in Singapore currently offer pre-sale revenue optimisation or AI/digital positioning.
           </p>
         </div>
-      </div>
     </section>
   );
 }
@@ -285,7 +266,7 @@ function Differentiators() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
           {cards.map(c => (
-            <div key={c.title} style={{ padding: '2rem', border: `1px solid ${BD}`, borderRadius: 8, background: CR }}>
+            <div key={c.title} style={{ padding: '2rem', border: `1px solid ${BD}`, borderRadius: 0, background: CR }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
                 <h3 style={{ fontFamily: serif, fontSize: '1.2rem', fontWeight: 700, color: MA, lineHeight: 1.3, flex: 1, marginRight: '0.75rem' }}>{c.title}</h3>
                 <span style={{ fontFamily: serif, fontSize: '1.4rem', fontWeight: 700, color: GO, flexShrink: 0 }}>{c.stat}</span>
@@ -335,20 +316,20 @@ function Approach() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginBottom: '3rem' }}>
           {blocks.map(b => (
-            <div key={b.title} style={{ padding: '2.25rem 2rem', border: `1px solid ${BD}`, borderRadius: 8 }}>
+            <div key={b.title} style={{ padding: '2.25rem 2rem', border: `1px solid ${BD}`, borderRadius: 0 }}>
               <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.875rem' }}>{b.step}</p>
               <h3 style={{ fontFamily: serif, fontSize: '1.3rem', fontWeight: 700, color: MA, marginBottom: '0.875rem', lineHeight: 1.3 }}>{b.title}</h3>
               <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.8 }}>{b.body}</p>
             </div>
           ))}
         </div>
-        <div style={{ padding: '1.5rem 2rem', border: `1px solid ${BD}`, borderRadius: 8, background: '#FBF8F3' }}>
+        <div style={{ padding: '1.5rem 2rem', border: `1px solid ${BD}`, borderRadius: 0, background: '#FBF8F3' }}>
           <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1rem' }}>
             The 6 Strategic Dimensions
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.625rem' }}>
             {dimensions.map(d => (
-              <span key={d} style={{ fontFamily: sans, fontSize: '0.82rem', fontWeight: 600, color: MA, background: CR, border: `1px solid ${BD}`, padding: '0.375rem 0.875rem', borderRadius: 20 }}>{d}</span>
+              <span key={d} style={{ fontFamily: sans, fontSize: '0.82rem', fontWeight: 600, color: MA, background: CR, border: `1px solid ${BD}`, padding: '0.375rem 0.875rem', borderRadius: 0 }}>{d}</span>
             ))}
           </div>
         </div>
@@ -380,7 +361,7 @@ function SaleabilityQuadrant() {
             <strong style={{ color: MA }}>Attractiveness to Buyers</strong> (growth potential, competitive advantage, low risk). Your position determines your advisory pathway.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', maxWidth: 700, border: `1px solid ${BD}`, borderRadius: 8, overflow: 'hidden' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', maxWidth: 700, border: `1px solid ${BD}`, borderRadius: 0, overflow: 'hidden' }}>
           {cells.map((c, i) => (
             <div key={c.name} style={{
               background: c.bg, padding: '2rem',
@@ -388,7 +369,7 @@ function SaleabilityQuadrant() {
               borderRight: i % 2 === 0 ? `1px solid ${BD}` : 'none',
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                <span style={{ display: 'inline-block', background: c.accent, color: CR, fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.25rem 0.75rem', borderRadius: 20 }}>
+                <span style={{ display: 'inline-block', background: c.accent, color: CR, fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.25rem 0.75rem', borderRadius: 0 }}>
                   {c.name}
                 </span>
                 <span style={{ fontFamily: serif, fontSize: '1rem', fontWeight: 700, color: c.accent }}>{c.score}</span>
@@ -401,7 +382,7 @@ function SaleabilityQuadrant() {
           <span style={{ fontFamily: sans, fontSize: '0.75rem', color: TM }}>↑ High Attractiveness to Buyers (top row)</span>
           <span style={{ fontFamily: sans, fontSize: '0.75rem', color: TM }}>→ High Readiness to Sell (right column)</span>
         </div>
-        <div style={{ marginTop: '2.5rem', padding: '1.5rem 2rem', border: `1px solid ${BD}`, borderRadius: 8, maxWidth: 700, background: '#FBF8F3' }}>
+        <div style={{ marginTop: '2.5rem', padding: '1.5rem 2rem', border: `1px solid ${BD}`, borderRadius: 0, maxWidth: 700, background: '#FBF8F3' }}>
           <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.7, margin: 0 }}>
             <strong style={{ color: MA }}>Not sure which quadrant you&apos;re in?</strong> Book a confidential Saleability Score™ assessment and find out exactly where your business stands — and what it will take to reach Ideal Sale.
           </p>
@@ -459,9 +440,9 @@ function Pricing() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', alignItems: 'start' }}>
           {tiers.map(t => (
-            <div key={t.name} style={{ padding: '2rem', border: t.featured ? `2px solid ${MA}` : `1px solid ${BD}`, borderRadius: 8, background: t.featured ? '#FBF8F3' : CR, position: 'relative' }}>
+            <div key={t.name} style={{ padding: '2rem', border: t.featured ? `2px solid ${MA}` : `1px solid ${BD}`, borderRadius: 0, background: t.featured ? '#FBF8F3' : CR, position: 'relative' }}>
               {t.featured && (
-                <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: MA, color: GL, fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.25rem 1rem', borderRadius: 20, whiteSpace: 'nowrap' }}>
+                <div style={{ position: 'absolute', top: -14, left: '50%', transform: 'translateX(-50%)', background: MA, color: GL, fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.25rem 1rem', borderRadius: 0, whiteSpace: 'nowrap' }}>
                   Most Common
                 </div>
               )}
@@ -477,7 +458,7 @@ function Pricing() {
                   </li>
                 ))}
               </ul>
-              <a href="#v2-contact" style={{ display: 'block', textAlign: 'center', fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: t.featured ? CR : MA, background: t.featured ? MA : 'transparent', border: `1px solid ${t.featured ? MA : BD}`, padding: '0.75rem', borderRadius: 4, textDecoration: 'none' }}>
+              <a href="#v2-contact" style={{ display: 'block', textAlign: 'center', fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: t.featured ? CR : MA, background: t.featured ? MA : 'transparent', border: `1px solid ${t.featured ? MA : BD}`, padding: '0.75rem', borderRadius: 0, textDecoration: 'none' }}>
                 {t.cta}
               </a>
             </div>
@@ -518,40 +499,34 @@ function WhoWeServe() {
   ];
   return (
     <section id="v2-serve" style={sectionStyle}>
-      <div style={{ ...inner, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'start' }}>
-        <div>
-          <span style={eyebrow}>Who We Serve</span>
-          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
-            Built for Founders at Every Stage of Exit
-          </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem' }}>
-            From Baby Boomer business owners approaching retirement to growth-stage founders considering strategic partnerships.
-          </p>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {segs.map((s, i) => (
-              <div key={s.title} style={{ paddingBottom: '2rem', marginBottom: '2rem', borderBottom: i < segs.length - 1 ? `1px solid ${BD}` : 'none' }}>
-                <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.25rem' }}>{s.label}</p>
-                <h3 style={{ fontFamily: serif, fontSize: '1.35rem', fontWeight: 700, color: MA, marginBottom: '0.25rem' }}>{s.title}</h3>
-                <p style={{ fontFamily: sans, fontSize: '0.75rem', fontWeight: 600, color: GO, marginBottom: '0.625rem' }}>{s.sub}</p>
-                <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.7, marginBottom: '0.875rem' }}>{s.desc}</p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {s.needs.map(n => (
-                    <span key={n} style={{ fontFamily: sans, fontSize: '0.75rem', color: TM, background: '#EDE8DF', padding: '0.25rem 0.75rem', borderRadius: 20 }}>{n}</span>
-                  ))}
-                </div>
+      <div style={{ ...inner }}>
+        <span style={eyebrow}>Who We Serve</span>
+        <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem', maxWidth: 600 }}>
+          Built for Founders at Every Stage of Exit
+        </h2>
+        <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem', maxWidth: 600 }}>
+          From Baby Boomer business owners approaching retirement to growth-stage founders considering strategic partnerships.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+          {segs.map((s, i) => (
+            <div key={s.title} style={{ paddingTop: '2rem', borderTop: `2px solid ${i === 0 ? MA : BD}` }}>
+              <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.25rem' }}>{s.label}</p>
+              <h3 style={{ fontFamily: serif, fontSize: '1.35rem', fontWeight: 700, color: MA, marginBottom: '0.25rem' }}>{s.title}</h3>
+              <p style={{ fontFamily: sans, fontSize: '0.75rem', fontWeight: 600, color: GO, marginBottom: '0.625rem' }}>{s.sub}</p>
+              <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.7, marginBottom: '0.875rem' }}>{s.desc}</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                {s.needs.map(n => (
+                  <span key={n} style={{ fontFamily: sans, fontSize: '0.75rem', color: TM, background: '#EDE8DF', padding: '0.25rem 0.75rem', borderRadius: 0 }}>{n}</span>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-        <div style={{ position: 'sticky', top: 80 }}>
-          <img src={PH.serve} alt="Founders we serve" loading="lazy"
-            style={{ width: '100%', height: 560, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
-          <div style={{ marginTop: '1.5rem', padding: '1.25rem 1.5rem', border: `1px solid ${BD}`, borderRadius: 8 }}>
-            <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.7, margin: 0 }}>
-              Not sure if you fit? Book your Saleability Score™ assessment.{' '}
-              <strong style={{ color: MA }}>No commitment. No pressure.</strong>
-            </p>
-          </div>
+        <div style={{ marginTop: '2.5rem', padding: '1.25rem 1.5rem', border: `1px solid ${BD}`, borderRadius: 0 }}>
+          <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.7, margin: 0 }}>
+            Not sure if you fit? Book your Saleability Score™ assessment.{' '}
+            <strong style={{ color: MA }}>No commitment. No pressure.</strong>
+          </p>
         </div>
       </div>
     </section>
@@ -574,10 +549,8 @@ function VisionValues() {
   ];
   return (
     <section id="v2-values" style={sectionStyle}>
-      <div style={{ ...inner, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'start' }}>
-        <img src={PH.values} alt="ExitPath values" loading="lazy"
-          style={{ width: '100%', height: 560, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
-        <div>
+      <div style={{ ...inner }}>
+        <div style={{ maxWidth: 720 }}>
           <span style={eyebrow}>About ExitPath</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '2rem' }}>
             Why We Exist
@@ -649,7 +622,7 @@ function Proof() {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
           {cards.map((c, i) => (
-            <div key={c.label} style={{ padding: '2rem', border: `1px solid ${BD}`, borderRadius: 8, borderTop: `3px solid ${accents[i]}` }}>
+            <div key={c.label} style={{ padding: '2rem', border: `1px solid ${BD}`, borderRadius: 0, borderTop: `3px solid ${accents[i]}` }}>
               <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{c.label}</p>
               <h3 style={{ fontFamily: serif, fontSize: '1.3rem', fontWeight: 700, color: MA, marginBottom: '1rem', lineHeight: 1.3 }}>{c.title}</h3>
               <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.75 }}>{c.body}</p>
@@ -673,7 +646,7 @@ function CTA() {
         <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem' }}>
           Book a confidential discovery call. We&apos;ll run your Saleability Score™ and show you exactly where value is being left on the table.
         </p>
-        <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '1rem 2.5rem', borderRadius: 4, textDecoration: 'none', display: 'inline-block' }}>
+        <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '1rem 2.5rem', borderRadius: 0, textDecoration: 'none', display: 'inline-block' }}>
           Book a Discovery Call
         </a>
       </div>
@@ -704,7 +677,7 @@ function Contact() {
 
   const inputStyle: React.CSSProperties = {
     width: '100%', fontFamily: sans, fontSize: '0.9rem', color: TX,
-    background: '#FBF8F3', border: `1px solid ${BD}`, borderRadius: 4,
+    background: '#FBF8F3', border: `1px solid ${BD}`, borderRadius: 0,
     padding: '0.75rem', outline: 'none', boxSizing: 'border-box',
   };
   const labelStyle: React.CSSProperties = {
@@ -724,7 +697,7 @@ function Contact() {
             Book a confidential discovery call. We&apos;ll run your Saleability Score™ and show you exactly where value is being left on the table.
           </p>
           {status === 'sent' ? (
-            <div style={{ padding: '2rem', border: `1px solid ${GO}`, borderRadius: 8, background: '#FBF8F0' }}>
+            <div style={{ padding: '2rem', border: `1px solid ${GO}`, borderRadius: 0, background: '#FBF8F0' }}>
               <p style={{ fontFamily: sans, fontWeight: 700, color: MA, marginBottom: '0.5rem' }}>Message received.</p>
               <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM }}>We&apos;ll be in touch within one business day.</p>
             </div>
@@ -754,7 +727,7 @@ function Contact() {
                   style={{ ...inputStyle, resize: 'vertical' }} />
               </div>
               <button type="submit" disabled={status === 'sending'}
-                style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 4, border: 'none', cursor: 'pointer', alignSelf: 'flex-start' }}>
+                style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 0, border: 'none', cursor: 'pointer', alignSelf: 'flex-start' }}>
                 {status === 'sending' ? 'Sending…' : 'Book a Discovery Call'}
               </button>
               {status === 'error' && (
@@ -766,8 +739,6 @@ function Contact() {
             </form>
           )}
         </div>
-        <img src={PH.contact} alt="Connect with ExitPath" loading="lazy"
-          style={{ width: '100%', height: 580, objectFit: 'cover', borderRadius: 8, display: 'block' }} />
       </div>
     </section>
   );
