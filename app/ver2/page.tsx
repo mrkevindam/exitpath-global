@@ -115,7 +115,7 @@ function Hero() {
       </div>
 
       {/* Stats bar — direct from copy doc */}
-      <div style={{ ...inner, borderTop: `1px solid ${BD}`, marginTop: '4rem', paddingTop: '2.5rem', display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
+      <div style={{ ...inner, borderTop: `1px solid ${BD}`, marginTop: '4rem', paddingTop: '2.5rem', display: 'flex', gap: '3rem', flexWrap: 'wrap', justifyContent: 'center' }}>
         {[
           { stat: 'SGD 10M', label: 'Max EBITDA Target'    },
           { stat: '30-pt',   label: 'Saleability Score™'  },
@@ -203,7 +203,7 @@ function MarketPosition() {
               ))}
             </div>
           </div>
-          <p style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 700, color: TM, marginTop: '1.25rem', fontStyle: 'italic' }}>
+          <p style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 700, color: TM, marginTop: '1.25rem', fontStyle: 'italic', textAlign: 'center' }}>
             Zero brokers in Singapore currently offer pre-sale revenue optimisation or AI/digital positioning.
           </p>
         </div>
@@ -362,7 +362,7 @@ function SaleabilityQuadrant() {
             <strong style={{ color: MA }}>Attractiveness to Buyers</strong> (growth potential, competitive advantage, low risk). Your position determines your advisory pathway.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', maxWidth: 700, border: `1px solid ${BD}`, borderRadius: 0, overflow: 'hidden' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', maxWidth: 700, border: `1px solid ${BD}`, borderRadius: 0, overflow: 'hidden', margin: '0 auto' }}>
           {cells.map((c, i) => (
             <div key={c.name} style={{
               background: c.bg, padding: '2rem',
@@ -379,11 +379,11 @@ function SaleabilityQuadrant() {
             </div>
           ))}
         </div>
-        <div style={{ display: 'flex', gap: '3rem', marginTop: '1.25rem', paddingLeft: '1rem', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '3rem', marginTop: '1.25rem', flexWrap: 'wrap', justifyContent: 'center', maxWidth: 700, margin: '1.25rem auto 0' }}>
           <span style={{ fontFamily: sans, fontSize: '0.75rem', color: TM }}>↑ High Attractiveness to Buyers (top row)</span>
           <span style={{ fontFamily: sans, fontSize: '0.75rem', color: TM }}>→ High Readiness to Sell (right column)</span>
         </div>
-        <div style={{ marginTop: '2.5rem', padding: '1.5rem 2rem', border: `1px solid ${BD}`, borderRadius: 0, maxWidth: 700, background: '#FBF8F3' }}>
+        <div style={{ marginTop: '2.5rem', padding: '1.5rem 2rem', border: `1px solid ${BD}`, borderRadius: 0, maxWidth: 700, background: '#FBF8F3', margin: '2.5rem auto 0' }}>
           <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.7, margin: 0 }}>
             <strong style={{ color: MA }}>Not sure which quadrant you&apos;re in?</strong> Book a confidential Saleability Score™ assessment and find out exactly where your business stands — and what it will take to reach Ideal Sale.
           </p>
