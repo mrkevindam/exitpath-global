@@ -94,8 +94,8 @@ function Header() {
 function Hero() {
   return (
     <section style={{ background: CR, paddingTop: 104, paddingBottom: 80, paddingLeft: '2rem', paddingRight: '2rem' }}>
-      <div style={{ ...inner, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ maxWidth: 720 }}>
+      <div style={{ ...inner }}>
+        <div style={{ maxWidth: 680 }}>
           <span style={eyebrow}>Strategic Exit Advisory</span>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(2.4rem, 4vw, 3.4rem)', fontWeight: 700, color: MA, lineHeight: 1.1, marginBottom: '1.5rem' }}>
             <span style={{ color: GL }}>Exit</span>Path Global helps founders unlock the full value of their business.
@@ -103,7 +103,7 @@ function Hero() {
           <p style={{ fontFamily: sans, fontSize: '1.05rem', color: TM, lineHeight: 1.75, marginBottom: '2.5rem', maxWidth: 520 }}>
             Clear preparation. Sharp positioning. Precise deal execution — delivered with global reach and total confidentiality.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
             <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 0, textDecoration: 'none' }}>
               Start a Conversation
             </a>
@@ -115,7 +115,7 @@ function Hero() {
       </div>
 
       {/* Stats bar — direct from copy doc */}
-      <div style={{ ...inner, borderTop: `1px solid ${BD}`, marginTop: '4rem', paddingTop: '2.5rem', display: 'flex', gap: '3rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+      <div style={{ ...inner, borderTop: `1px solid ${BD}`, marginTop: '4rem', paddingTop: '2.5rem', display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
         {[
           { stat: 'SGD 10M', label: 'Max EBITDA Target'    },
           { stat: '30-pt',   label: 'Saleability Score™'  },
@@ -168,13 +168,13 @@ function MarketPosition() {
   ];
   return (
     <section style={sectionStyle}>
-      <div style={{ ...inner, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ maxWidth: 760, width: '100%' }}>
-          <span style={{ ...eyebrow, textAlign: 'center', display: 'block' }}>Market Position</span>
-          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1.25rem', textAlign: 'center' }}>
+      <div style={{ ...inner }}>
+        <div style={{ maxWidth: 760 }}>
+          <span style={eyebrow}>Market Position</span>
+          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1.25rem' }}>
             Occupy the Gap Nobody Else Fills
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.8, marginBottom: '1.75rem', textAlign: 'center' }}>
+          <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.8, marginBottom: '1.75rem' }}>
             The SME exit market is saturated with generalist brokers competing on buyer databases and deal speed. ExitPath operates in the underserved, high-value space — the{' '}
             <strong style={{ color: MA }}>$1M–$10M range with value-improvement positioning</strong>{' '}
             that nobody currently owns.
@@ -203,7 +203,7 @@ function MarketPosition() {
               ))}
             </div>
           </div>
-          <p style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 700, color: TM, marginTop: '1.25rem', fontStyle: 'italic', textAlign: 'center' }}>
+          <p style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 700, color: TM, marginTop: '1.25rem', fontStyle: 'italic' }}>
             Zero brokers in Singapore currently offer pre-sale revenue optimisation or AI/digital positioning.
           </p>
         </div>
@@ -351,7 +351,7 @@ function SaleabilityQuadrant() {
   return (
     <section id="v2-quadrant" style={sectionStyle}>
       <div style={inner}>
-        <div style={{ marginBottom: '3rem', maxWidth: 640 }}>
+        <div style={{ marginBottom: '3rem', maxWidth: 640, margin: '0 auto 3rem', textAlign: 'center' }}>
           <span style={eyebrow}>The Saleability Quadrant</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
             Where Does Your Business Sit?
@@ -501,13 +501,15 @@ function WhoWeServe() {
   return (
     <section id="v2-serve" style={sectionStyle}>
       <div style={{ ...inner }}>
-        <span style={eyebrow}>Who We Serve</span>
-        <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem', maxWidth: 600 }}>
-          Built for Founders at Every Stage of Exit
-        </h2>
-        <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem', maxWidth: 600 }}>
-          From Baby Boomer business owners approaching retirement to growth-stage founders considering strategic partnerships.
-        </p>
+        <div style={{ textAlign: 'center', maxWidth: 600, margin: '0 auto 2.5rem' }}>
+          <span style={eyebrow}>Who We Serve</span>
+          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
+            Built for Founders at Every Stage of Exit
+          </h2>
+          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8 }}>
+            From Baby Boomer business owners approaching retirement to growth-stage founders considering strategic partnerships.
+          </p>
+        </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
           {segs.map((s, i) => (
             <div key={s.title} style={{ paddingTop: '2rem', borderTop: `2px solid ${i === 0 ? MA : BD}` }}>
@@ -550,8 +552,8 @@ function VisionValues() {
   ];
   return (
     <section id="v2-values" style={sectionStyle}>
-      <div style={{ ...inner, display: 'flex', justifyContent: 'center' }}>
-        <div style={{ maxWidth: 720, width: '100%' }}>
+      <div style={{ ...inner }}>
+        <div style={{ maxWidth: 720 }}>
           <span style={eyebrow}>About ExitPath</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '2rem' }}>
             Why We Exist
