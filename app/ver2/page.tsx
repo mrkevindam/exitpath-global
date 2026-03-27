@@ -94,7 +94,7 @@ function Header() {
 function Hero() {
   return (
     <section style={{ background: CR, paddingTop: 104, paddingBottom: 80, paddingLeft: '2rem', paddingRight: '2rem' }}>
-      <div style={{ ...inner }}>
+      <div style={{ ...inner, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ maxWidth: 720 }}>
           <span style={eyebrow}>Strategic Exit Advisory</span>
           <h1 style={{ fontFamily: serif, fontSize: 'clamp(2.4rem, 4vw, 3.4rem)', fontWeight: 700, color: MA, lineHeight: 1.1, marginBottom: '1.5rem' }}>
@@ -103,7 +103,7 @@ function Hero() {
           <p style={{ fontFamily: sans, fontSize: '1.05rem', color: TM, lineHeight: 1.75, marginBottom: '2.5rem', maxWidth: 520 }}>
             Clear preparation. Sharp positioning. Precise deal execution — delivered with global reach and total confidentiality.
           </p>
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
             <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 0, textDecoration: 'none' }}>
               Start a Conversation
             </a>
@@ -168,13 +168,13 @@ function MarketPosition() {
   ];
   return (
     <section style={sectionStyle}>
-      <div style={{ ...inner }}>
-        <div style={{ maxWidth: 760 }}>
-          <span style={eyebrow}>Market Position</span>
-          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1.25rem' }}>
+      <div style={{ ...inner, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ maxWidth: 760, width: '100%' }}>
+          <span style={{ ...eyebrow, textAlign: 'center', display: 'block' }}>Market Position</span>
+          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1.25rem', textAlign: 'center' }}>
             Occupy the Gap Nobody Else Fills
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.8, marginBottom: '1.75rem' }}>
+          <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.8, marginBottom: '1.75rem', textAlign: 'center' }}>
             The SME exit market is saturated with generalist brokers competing on buyer databases and deal speed. ExitPath operates in the underserved, high-value space — the{' '}
             <strong style={{ color: MA }}>$1M–$10M range with value-improvement positioning</strong>{' '}
             that nobody currently owns.
@@ -550,8 +550,8 @@ function VisionValues() {
   ];
   return (
     <section id="v2-values" style={sectionStyle}>
-      <div style={{ ...inner }}>
-        <div style={{ maxWidth: 720 }}>
+      <div style={{ ...inner, display: 'flex', justifyContent: 'center' }}>
+        <div style={{ maxWidth: 720, width: '100%' }}>
           <span style={eyebrow}>About ExitPath</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '2rem' }}>
             Why We Exist
@@ -688,13 +688,13 @@ function Contact() {
 
   return (
     <section id="v2-contact" style={sectionStyle}>
-      <div style={{ ...inner, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'start' }}>
-        <div>
-          <span style={eyebrow}>Get In Touch</span>
-          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1rem' }}>
+      <div style={{ ...inner, display: 'flex', justifyContent: 'center' }}>
+        <div style={{ maxWidth: 640, width: '100%' }}>
+          <span style={{ ...eyebrow, textAlign: 'center', display: 'block' }}>Get In Touch</span>
+          <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1rem', textAlign: 'center' }}>
             Start Your Exit Journey
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem' }}>
+          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem', textAlign: 'center' }}>
             Book a confidential discovery call. We&apos;ll run your Saleability Score™ and show you exactly where value is being left on the table.
           </p>
           {status === 'sent' ? (
