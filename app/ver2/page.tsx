@@ -790,7 +790,7 @@ function Contact() {
       const r = await fetch('/api/subscribe', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ firstName: form.fullName.split(' ')[0], email: form.email }),
+        body:    JSON.stringify({ firstName: form.fullName.split(' ')[0], email: form.email, phone: form.phone, message: form.message }),
       });
       if (!r.ok) throw new Error();
       router.push('/ver2/thank-you');
