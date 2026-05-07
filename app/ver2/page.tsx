@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 // ─── Design Tokens ─────────────────────────────────────────────────────────
 const CR = '#F5F0E4';
@@ -779,7 +780,8 @@ function CTA() {
 // ─── Section 12: Contact ─────────────────────────────────────────────────────
 function Contact() {
   const [form, setForm]     = useState({ fullName: '', email: '', phone: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -791,7 +793,7 @@ function Contact() {
         body:    JSON.stringify({ firstName: form.fullName.split(' ')[0], email: form.email }),
       });
       if (!r.ok) throw new Error();
-      setStatus('sent');
+      router.push('/ver2/thank-you');
     } catch {
       setStatus('error');
     }
@@ -818,13 +820,7 @@ function Contact() {
           <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem', textAlign: 'center' }}>
             Book a confidential discovery call. We&apos;ll run your Saleability Score™ and show you exactly where value is being left on the table.
           </p>
-          {status === 'sent' ? (
-            <div style={{ padding: '2rem', border: `1px solid ${GO}`, borderRadius: 0, background: '#FBF8F0' }}>
-              <p style={{ fontFamily: sans, fontWeight: 700, color: MA, marginBottom: '0.5rem' }}>Message received.</p>
-              <p style={{ fontFamily: sans, fontSize: '1rem', color: TM }}>We&apos;ll be in touch within one business day.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
                   <label style={labelStyle}>Full Name</label>
@@ -853,13 +849,12 @@ function Contact() {
                 {status === 'sending' ? 'Sending…' : 'Book a Discovery Call'}
               </button>
               {status === 'error' && (
-                <p style={{ fontFamily: sans, fontSize: '0.875rem', color: '#C0392B' }}>
+                <p style={{ fontFamily: sans, fontSize: '1rem', color: '#C0392B' }}>
                   Something went wrong. Please email us at{' '}
                   <a href="mailto:consulting@kevindam.com" style={{ color: MA }}>consulting@kevindam.com</a>
                 </p>
               )}
             </form>
-          )}
         </div>
       </div>
     </section>
