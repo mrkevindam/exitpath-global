@@ -780,7 +780,7 @@ function CTA() {
 
 // ─── Section 12: Contact ─────────────────────────────────────────────────────
 function Contact() {
-  const [form, setForm]     = useState({ fullName: '', email: '', phone: '', message: '' });
+  const [form, setForm]     = useState({ fullName: '', email: '', phone: '', message: '', optIn: true });
   const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
   const router = useRouter();
 
@@ -845,6 +845,19 @@ function Contact() {
                   onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
                   style={{ ...inputStyle, resize: 'vertical' }} />
               </div>
+              {/* Opt-in checkbox */}
+              <label style={{ display: 'flex', alignItems: 'flex-start', gap: '0.625rem', cursor: 'pointer' }}>
+                <input
+                  type="checkbox"
+                  checked={form.optIn}
+                  onChange={e => setForm(f => ({ ...f, optIn: e.target.checked }))}
+                  style={{ marginTop: '0.2rem', accentColor: MA, width: 16, height: 16, flexShrink: 0, cursor: 'pointer' }}
+                />
+                <span style={{ fontFamily: sans, fontSize: '0.8rem', color: TM, lineHeight: 1.6 }}>
+                  By submitting this form, you agree to receive information about business exit planning and ExitPath Global&apos;s consulting services. We respect your privacy and you can unsubscribe at any time.{' '}
+                  <a href="/privacy-policy" style={{ color: MA, textDecoration: 'underline' }}>View our Privacy Policy</a>.
+                </span>
+              </label>
               <button type="submit" disabled={status === 'sending'}
                 style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 0, border: 'none', cursor: 'pointer', alignSelf: 'flex-start' }}>
                 {status === 'sending' ? 'Sending…' : 'Book a Discovery Call'}
@@ -885,7 +898,7 @@ function Footer() {
             <a key={l.href} href={l.href} style={{ fontFamily: sans, fontSize: '1rem', color: TM, textDecoration: 'none' }}>{l.label}</a>
           ))}
         </nav>
-        <p style={{ fontFamily: sans, fontSize: '1rem', color: TM }}>© 2025 ExitPath Global. All rights reserved.</p>
+        <p style={{ fontFamily: sans, fontSize: '1rem', color: TM }}>© 2026 ExitPath Global. All rights reserved.</p>
       </div>
     </footer>
   );
