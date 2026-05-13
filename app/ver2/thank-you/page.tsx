@@ -24,7 +24,7 @@ export default function ThankYouPage() {
         {/* Header */}
         <header style={{ borderBottom: `1px solid ${BD}`, background: CR }}>
           <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem', height: 64, display: 'flex', alignItems: 'center' }}>
-          <a href="/ver2" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+          <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
             <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: GL }}>Exit</span>
             <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 600, color: MA }}>Path</span>
             <span style={{ fontFamily: sans, fontSize: '0.63rem', fontWeight: 500, color: TM, marginLeft: '0.3rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Global</span>
@@ -111,14 +111,14 @@ export default function ThankYouPage() {
 
             {/* CTA buttons */}
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <a href="/ver2" style={{
+              <a href="/" style={{
                 fontFamily: sans, fontSize: '1rem', fontWeight: 600,
                 color: CR, background: MA,
                 padding: '0.875rem 2rem', textDecoration: 'none', display: 'inline-block',
               }}>
                 Back to Home
               </a>
-              <a href="/ver2#v2-approach" style={{
+              <a href="/#approach" style={{
                 fontFamily: sans, fontSize: '1rem', fontWeight: 500,
                 color: MA, border: `1px solid ${BD}`,
                 padding: '0.875rem 2rem', textDecoration: 'none', display: 'inline-block',

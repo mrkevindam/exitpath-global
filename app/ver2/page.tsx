@@ -42,9 +42,9 @@ function Header() {
   }, []);
 
   const links = [
-    { label: 'Our Approach', href: '#v2-approach' },
-    { label: 'Pricing',      href: '#v2-pricing'  },
-    { label: 'Who We Serve', href: '#v2-serve'    },
+    { label: 'Our Approach', href: '#approach' },
+    { label: 'Pricing',      href: '#pricing'  },
+    { label: 'Who We Serve', href: '#serve'    },
   ];
 
   return (
@@ -56,7 +56,7 @@ function Header() {
       transition: 'all 0.3s ease',
     }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <a href="/ver2" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+        <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
           <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: GL }}>Exit</span>
           <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 600, color: MA }}>Path</span>
           <span style={{ fontFamily: sans, fontSize: '0.63rem', fontWeight: 500, color: TM, marginLeft: '0.3rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Global</span>
@@ -65,7 +65,7 @@ function Header() {
           {links.map(l => (
             <a key={l.href} href={l.href} style={{ fontFamily: sans, fontSize: '1rem', fontWeight: 500, color: scrolled ? TM : MA, textDecoration: 'none' }}>{l.label}</a>
           ))}
-          <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '1rem', fontWeight: 600, color: CR, background: MA, padding: '0.5rem 1.25rem', borderRadius: 0, textDecoration: 'none' }}>
+          <a href="#contact" style={{ fontFamily: sans, fontSize: '1rem', fontWeight: 600, color: CR, background: MA, padding: '0.5rem 1.25rem', borderRadius: 0, textDecoration: 'none' }}>
             Start a Conversation
           </a>
         </nav>
@@ -93,7 +93,7 @@ function Header() {
             <a key={l.href} href={l.href} onClick={() => setOpen(false)}
               style={{ fontFamily: sans, fontSize: '1rem', color: MA, textDecoration: 'none' }}>{l.label}</a>
           ))}
-          <a href="#v2-contact" onClick={() => setOpen(false)}
+          <a href="#contact" onClick={() => setOpen(false)}
             style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '0.75rem', borderRadius: 0, textDecoration: 'none', textAlign: 'center' }}>
             Start a Conversation
           </a>
@@ -128,10 +128,10 @@ function Hero() {
               Clear preparation. Sharp positioning. Precise deal execution — delivered with global reach and total confidentiality.
             </p>
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 0, textDecoration: 'none' }}>
+              <a href="#contact" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 0, textDecoration: 'none' }}>
                 Start a Conversation
               </a>
-              <a href="#v2-approach" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 500, color: MA, padding: '0.875rem 2rem', border: `1px solid ${BD}`, borderRadius: 0, textDecoration: 'none' }}>
+              <a href="#approach" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 500, color: MA, padding: '0.875rem 2rem', border: `1px solid ${BD}`, borderRadius: 0, textDecoration: 'none' }}>
                 Our Approach →
               </a>
             </div>
@@ -411,7 +411,7 @@ function Approach() {
   const dimensions = ['Financial Clarity', 'Revenue Quality', 'Operational Maturity', 'Digital Readiness', 'Management Depth', 'Market Position'];
 
   return (
-    <section id="v2-approach" style={sectionStyle}>
+    <section id="approach" style={sectionStyle}>
       <div style={inner}>
         <div style={{ marginBottom: '3.5rem', maxWidth: 640 }}>
           <span style={eyebrow}>Our Approach</span>
@@ -456,7 +456,7 @@ function SaleabilityQuadrant() {
   ];
 
   return (
-    <section id="v2-quadrant" style={sectionStyle}>
+    <section id="quadrant" style={sectionStyle}>
       <div style={inner}>
         <div style={{ marginBottom: '3rem', maxWidth: 640, margin: '0 auto 3rem', textAlign: 'center' }}>
           <span style={eyebrow}>The Saleability Quadrant</span>
@@ -508,7 +508,7 @@ function SaleabilityQuadrant() {
           <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.7, margin: 0 }}>
             <strong style={{ color: MA }}>Not sure which quadrant you&apos;re in?</strong> Book a confidential Saleability Score™ assessment and find out exactly where your business stands — and what it will take to reach Ideal Sale.
           </p>
-          <a href="#v2-contact" style={{ display: 'inline-block', marginTop: '1rem', fontFamily: sans, fontSize: '0.8rem', fontWeight: 600, color: MA, textDecoration: 'none', borderBottom: `1px solid ${MA}` }}>
+          <a href="#contact" style={{ display: 'inline-block', marginTop: '1rem', fontFamily: sans, fontSize: '0.8rem', fontWeight: 600, color: MA, textDecoration: 'none', borderBottom: `1px solid ${MA}` }}>
             Book your assessment →
           </a>
         </div>
@@ -549,7 +549,7 @@ function Pricing() {
     },
   ];
   return (
-    <section id="v2-pricing" style={sectionStyle}>
+    <section id="pricing" style={sectionStyle}>
       <div style={inner}>
         <div style={{ marginBottom: '3.5rem', maxWidth: 600 }}>
           <span style={eyebrow}>Pricing Model</span>
@@ -580,7 +580,7 @@ function Pricing() {
                   </li>
                 ))}
               </ul>
-              <a href="#v2-contact" style={{ display: 'block', textAlign: 'center', fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: t.featured ? CR : MA, background: t.featured ? MA : 'transparent', border: `1px solid ${t.featured ? MA : BD}`, padding: '0.75rem', borderRadius: 0, textDecoration: 'none' }}>
+              <a href="#contact" style={{ display: 'block', textAlign: 'center', fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: t.featured ? CR : MA, background: t.featured ? MA : 'transparent', border: `1px solid ${t.featured ? MA : BD}`, padding: '0.75rem', borderRadius: 0, textDecoration: 'none' }}>
                 {t.cta}
               </a>
             </div>
@@ -620,7 +620,7 @@ function WhoWeServe() {
     },
   ];
   return (
-    <section id="v2-serve" style={sectionStyle}>
+    <section id="serve" style={sectionStyle}>
       <div style={{ ...inner }}>
         <div style={{ textAlign: 'center', maxWidth: 600, margin: '0 auto 2.5rem' }}>
           <span style={eyebrow}>Who We Serve</span>
@@ -672,7 +672,7 @@ function VisionValues() {
     { roman: 'V',   title: 'Global Perspective',      desc: 'We think cross-border, cross-industry, and cross-cycle — connecting the right buyers globally.' },
   ];
   return (
-    <section id="v2-values" style={sectionStyle}>
+    <section id="values" style={sectionStyle}>
       <div style={{ ...inner }}>
         <div style={{ maxWidth: 720 }}>
           <span style={eyebrow}>About ExitPath</span>
@@ -736,7 +736,7 @@ function Proof() {
   ];
   const accents = [MA, GO, GL];
   return (
-    <section id="v2-proof" style={sectionStyle}>
+    <section id="proof" style={sectionStyle}>
       <div style={inner}>
         <div style={{ marginBottom: '3.5rem', maxWidth: 600 }}>
           <span style={eyebrow}>Why Clients Choose ExitPath</span>
@@ -770,7 +770,7 @@ function CTA() {
         <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem' }}>
           Book a confidential discovery call. We&apos;ll run your Saleability Score™ and show you exactly where value is being left on the table.
         </p>
-        <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '1rem 2.5rem', borderRadius: 0, textDecoration: 'none', display: 'inline-block' }}>
+        <a href="#contact" style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '1rem 2.5rem', borderRadius: 0, textDecoration: 'none', display: 'inline-block' }}>
           Book a Discovery Call
         </a>
       </div>
@@ -794,7 +794,7 @@ function Contact() {
         body:    JSON.stringify({ firstName: form.fullName.split(' ')[0], email: form.email, phone: form.phone, message: form.message }),
       });
       if (!r.ok) throw new Error();
-      router.push('/ver2/thank-you');
+      router.push('/thank-you');
     } catch {
       setStatus('error');
     }
@@ -811,7 +811,7 @@ function Contact() {
   };
 
   return (
-    <section id="v2-contact" style={sectionStyle}>
+    <section id="contact" style={sectionStyle}>
       <div style={{ ...inner, display: 'flex', justifyContent: 'center' }}>
         <div style={{ maxWidth: 640, width: '100%' }}>
           <span style={{ ...eyebrow, textAlign: 'center', display: 'block' }}>Get In Touch</span>
@@ -877,10 +877,10 @@ function Footer() {
         </div>
         <nav style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
           {[
-            { label: 'Our Approach', href: '#v2-approach' },
-            { label: 'Pricing',      href: '#v2-pricing'  },
-            { label: 'Who We Serve', href: '#v2-serve'    },
-            { label: 'Contact',      href: '#v2-contact'  },
+            { label: 'Our Approach', href: '#approach' },
+            { label: 'Pricing',      href: '#pricing'  },
+            { label: 'Who We Serve', href: '#serve'    },
+            { label: 'Contact',      href: '#contact'  },
           ].map(l => (
             <a key={l.href} href={l.href} style={{ fontFamily: sans, fontSize: '1rem', color: TM, textDecoration: 'none' }}>{l.label}</a>
           ))}
