@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 // ─── Design Tokens ─────────────────────────────────────────────────────────
 const CR = '#F5F0E4';
@@ -17,7 +18,7 @@ const sans  = "'Jost', system-ui, sans-serif";
 
 // ─── Shared Styles ──────────────────────────────────────────────────────────
 const eyebrow: React.CSSProperties = {
-  fontFamily: sans, fontSize: '0.68rem', fontWeight: 600,
+  fontFamily: sans, fontSize: '1.25rem', fontWeight: 600,
   color: GO, letterSpacing: '0.15em', textTransform: 'uppercase',
   marginBottom: '1rem', display: 'block',
 };
@@ -41,9 +42,9 @@ function Header() {
   }, []);
 
   const links = [
-    { label: 'Our Approach', href: '#v2-approach' },
-    { label: 'Pricing',      href: '#v2-pricing'  },
-    { label: 'Who We Serve', href: '#v2-serve'    },
+    { label: 'Our Approach', href: '#approach' },
+    { label: 'Pricing',      href: '#pricing'  },
+    { label: 'Who We Serve', href: '#serve'    },
   ];
 
   return (
@@ -55,23 +56,35 @@ function Header() {
       transition: 'all 0.3s ease',
     }}>
       <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <a href="/ver2" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+        <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
           <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: GL }}>Exit</span>
           <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 600, color: MA }}>Path</span>
           <span style={{ fontFamily: sans, fontSize: '0.63rem', fontWeight: 500, color: TM, marginLeft: '0.3rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Global</span>
         </a>
         <nav style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
           {links.map(l => (
-            <a key={l.href} href={l.href} style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 500, color: scrolled ? TM : MA, textDecoration: 'none' }}>{l.label}</a>
+            <a key={l.href} href={l.href} style={{ fontFamily: sans, fontSize: '1rem', fontWeight: 500, color: scrolled ? TM : MA, textDecoration: 'none' }}>{l.label}</a>
           ))}
-          <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 600, color: CR, background: MA, padding: '0.5rem 1.25rem', borderRadius: 0, textDecoration: 'none' }}>
+          <a href="#contact" style={{ fontFamily: sans, fontSize: '1rem', fontWeight: 600, color: CR, background: MA, padding: '0.5rem 1.25rem', borderRadius: 0, textDecoration: 'none' }}>
             Start a Conversation
           </a>
         </nav>
         <button onClick={() => setOpen(o => !o)} aria-label="Menu"
-          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, display: 'none' }}
+          style={{ background: 'none', border: `1px solid ${BD}`, cursor: 'pointer', padding: '8px 10px', display: 'none', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 5, width: 44, height: 44 }}
           className="mobile-menu-btn">
-          {[0,1,2].map(i => <span key={i} style={{ display: 'block', width: 22, height: 2, background: MA, margin: '4px 0' }} />)}
+          {open ? (
+            <>
+              <span style={{ display: 'block', width: 22, height: 2, background: MA, transform: 'rotate(45deg) translate(5px, 5px)', transition: 'all 0.2s' }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: MA, opacity: 0, transition: 'all 0.2s' }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: MA, transform: 'rotate(-45deg) translate(5px, -5px)', transition: 'all 0.2s' }} />
+            </>
+          ) : (
+            <>
+              <span style={{ display: 'block', width: 22, height: 2, background: MA }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: MA }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: MA }} />
+            </>
+          )}
         </button>
       </div>
       {open && (
@@ -80,7 +93,7 @@ function Header() {
             <a key={l.href} href={l.href} onClick={() => setOpen(false)}
               style={{ fontFamily: sans, fontSize: '1rem', color: MA, textDecoration: 'none' }}>{l.label}</a>
           ))}
-          <a href="#v2-contact" onClick={() => setOpen(false)}
+          <a href="#contact" onClick={() => setOpen(false)}
             style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '0.75rem', borderRadius: 0, textDecoration: 'none', textAlign: 'center' }}>
             Start a Conversation
           </a>
@@ -92,29 +105,81 @@ function Header() {
 
 // ─── Section 1: Hero ────────────────────────────────────────────────────────
 function Hero() {
+  const [videoOpen, setVideoOpen] = useState(false);
+
+  useEffect(() => {
+    if (!videoOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setVideoOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [videoOpen]);
+
   return (
-    <section style={{ background: CR, paddingTop: 104, paddingBottom: 80, paddingLeft: '2rem', paddingRight: '2rem' }}>
+    <section className="hero-section" style={{ background: CR, paddingTop: 104, paddingBottom: 80, paddingLeft: '2rem', paddingRight: '2rem' }}>
       <div style={{ ...inner }}>
-        <div style={{ maxWidth: 680 }}>
-          <span style={eyebrow}>Strategic Exit Advisory</span>
-          <h1 style={{ fontFamily: serif, fontSize: 'clamp(2.4rem, 4vw, 3.4rem)', fontWeight: 700, color: MA, lineHeight: 1.1, marginBottom: '1.5rem' }}>
-            <span style={{ color: GL }}>Exit</span>Path Global helps founders unlock the full value of their business.
-          </h1>
-          <p style={{ fontFamily: sans, fontSize: '1.05rem', color: TM, lineHeight: 1.75, marginBottom: '2.5rem', maxWidth: 520 }}>
-            Clear preparation. Sharp positioning. Precise deal execution — delivered with global reach and total confidentiality.
-          </p>
-          <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-            <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 0, textDecoration: 'none' }}>
-              Start a Conversation
-            </a>
-            <a href="#v2-approach" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 500, color: MA, padding: '0.875rem 2rem', border: `1px solid ${BD}`, borderRadius: 0, textDecoration: 'none' }}>
-              Our Approach →
-            </a>
+        <div className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', alignItems: 'center' }}>
+          {/* Left: copy */}
+          <div style={{ maxWidth: 620 }}>
+            <span style={eyebrow}>Strategic Exit Advisory</span>
+            <h1 style={{ fontFamily: serif, fontSize: 'clamp(2.4rem, 4vw, 3.4rem)', fontWeight: 700, color: MA, lineHeight: 1.1, marginBottom: '1.5rem' }}>
+              <span style={{ color: GL }}>Exit</span>Path Global helps founders unlock the full value of their business.
+            </h1>
+            <p style={{ fontFamily: sans, fontSize: '1.05rem', color: TM, lineHeight: 1.75, marginBottom: '2.5rem', maxWidth: 520 }}>
+              Clear preparation. Sharp positioning. Precise deal execution — delivered with global reach and total confidentiality.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <a href="#contact" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: CR, background: MA, padding: '0.875rem 2rem', borderRadius: 0, textDecoration: 'none' }}>
+                Start a Conversation
+              </a>
+              <a href="#approach" style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 500, color: MA, padding: '0.875rem 2rem', border: `1px solid ${BD}`, borderRadius: 0, textDecoration: 'none' }}>
+                Our Approach →
+              </a>
+            </div>
+          </div>
+
+          {/* Right: portrait video thumbnail */}
+          <div
+            role="button"
+            aria-label="Play video"
+            onClick={() => setVideoOpen(true)}
+            className="hero-video"
+            style={{
+              position: 'relative',
+              width: '100%',
+              aspectRatio: '16/9',
+              justifySelf: 'center',
+              cursor: 'pointer',
+              overflow: 'hidden',
+              border: `1px solid rgba(188,156,34,0.3)`,
+              backgroundImage: `url(https://img.youtube.com/vi/a6kjOPjkjVc/maxresdefault.jpg)`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          >
+            {/* Dark overlay */}
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(40,8,4,0.45)' }} />
+            {/* Play button */}
+            <div style={{
+              position: 'absolute', inset: 0,
+              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '0.75rem',
+            }}>
+              <div style={{
+                width: 60, height: 60, borderRadius: '50%',
+                background: 'rgba(255,255,255,0.15)',
+                border: '2px solid rgba(255,255,255,0.8)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <polygon points="6,3 17,10 6,17" fill="white" />
+                </svg>
+              </div>
+              <span style={{ fontFamily: sans, fontSize: '0.65rem', fontWeight: 600, color: 'rgba(255,255,255,0.9)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Watch</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Stats bar — direct from copy doc */}
+      {/* Stats bar */}
       <div style={{ ...inner, borderTop: `1px solid ${BD}`, marginTop: '4rem', paddingTop: '2.5rem', display: 'flex', gap: '3rem', flexWrap: 'wrap' }}>
         {[
           { stat: 'SGD 10M', label: 'Max EBITDA Target'    },
@@ -127,6 +192,48 @@ function Hero() {
           </div>
         ))}
       </div>
+
+      {/* Fullscreen video modal */}
+      {videoOpen && (
+        <div
+          onClick={() => setVideoOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 1000,
+            background: 'rgba(0,0,0,0.93)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}
+        >
+          {/* Close button */}
+          <button
+            onClick={() => setVideoOpen(false)}
+            style={{
+              position: 'absolute', top: '1.5rem', right: '1.5rem',
+              background: 'none', border: '1px solid rgba(255,255,255,0.3)',
+              color: 'white', width: 40, height: 40, borderRadius: '50%',
+              cursor: 'pointer', fontSize: '1.1rem', lineHeight: 1,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}
+            aria-label="Close video"
+          >
+            ✕
+          </button>
+          {/* Video container — stop propagation so clicking video doesn't close */}
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{ position: 'relative', width: '90vw', maxWidth: 1100, aspectRatio: '16/9' }}
+          >
+            <iframe
+              src="https://www.youtube.com/embed/a6kjOPjkjVc?si=prAtekYE0KWwec8Q&autoplay=1"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              style={{ width: '100%', height: '100%', display: 'block' }}
+            />
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -174,12 +281,12 @@ function MarketPosition() {
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1.25rem' }}>
             Occupy the Gap Nobody Else Fills
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.8, marginBottom: '1.75rem' }}>
+          <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8, marginBottom: '1.75rem' }}>
             The SME exit market is saturated with generalist brokers competing on buyer databases and deal speed. ExitPath operates in the underserved, high-value space — the{' '}
             <strong style={{ color: MA }}>$1M–$10M range with value-improvement positioning</strong>{' '}
             that nobody currently owns.
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <div className="grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
             <div style={{ padding: '1.25rem', background: '#EDE8DF', borderRadius: 0 }}>
               <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: TM, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.875rem' }}>
                 What Everyone Else Does
@@ -187,7 +294,7 @@ function MarketPosition() {
               {overserved.map(pt => (
                 <div key={pt} style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
                   <span style={{ color: '#9A9A9A', fontWeight: 700, flexShrink: 0, fontSize: '0.75rem', marginTop: 1 }}>✕</span>
-                  <span style={{ fontFamily: sans, fontSize: '0.78rem', color: TM, lineHeight: 1.5 }}>{pt}</span>
+                  <span style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.5 }}>{pt}</span>
                 </div>
               ))}
             </div>
@@ -198,12 +305,12 @@ function MarketPosition() {
               {underserved.map(pt => (
                 <div key={pt} style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
                   <span style={{ color: GO, fontWeight: 700, flexShrink: 0, fontSize: '0.75rem', marginTop: 1 }}>→</span>
-                  <span style={{ fontFamily: sans, fontSize: '0.78rem', color: MA, lineHeight: 1.5, fontWeight: 500 }}>{pt}</span>
+                  <span style={{ fontFamily: sans, fontSize: '1rem', color: MA, lineHeight: 1.5, fontWeight: 500 }}>{pt}</span>
                 </div>
               ))}
             </div>
           </div>
-          <p style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 700, color: TM, marginTop: '1.25rem', fontStyle: 'italic' }}>
+          <p style={{ fontFamily: sans, fontSize: '1rem', fontWeight: 700, color: TM, marginTop: '1.25rem', fontStyle: 'italic' }}>
             Zero brokers in Singapore currently offer pre-sale revenue optimisation or AI/digital positioning.
           </p>
         </div>
@@ -261,19 +368,19 @@ function Differentiators() {
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
             Built on value creation, not just deal execution.
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8 }}>
+          <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8 }}>
             Every engagement starts with making your business more valuable, more transferable, and more attractive to the right buyers.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+        <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
           {cards.map(c => (
             <div key={c.title} style={{ padding: '2rem', border: `1px solid ${BD}`, borderRadius: 0, background: CR }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                <h3 style={{ fontFamily: serif, fontSize: '1.2rem', fontWeight: 700, color: MA, lineHeight: 1.3, flex: 1, marginRight: '0.75rem' }}>{c.title}</h3>
+                <h3 style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: MA, lineHeight: 1.3, flex: 1, marginRight: '0.75rem' }}>{c.title}</h3>
                 <span style={{ fontFamily: serif, fontSize: '1.4rem', fontWeight: 700, color: GO, flexShrink: 0 }}>{c.stat}</span>
               </div>
-              <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.7, marginBottom: '1rem' }}>{c.front}</p>
-              <p style={{ fontFamily: sans, fontSize: '0.8rem', color: TM, lineHeight: 1.65, fontStyle: 'italic', borderTop: `1px solid ${BD}`, paddingTop: '0.875rem' }}>{c.back}</p>
+              <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.7, marginBottom: '1rem' }}>{c.front}</p>
+              <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.65, fontStyle: 'italic', borderTop: `1px solid ${BD}`, paddingTop: '0.875rem' }}>{c.back}</p>
             </div>
           ))}
         </div>
@@ -304,31 +411,31 @@ function Approach() {
   const dimensions = ['Financial Clarity', 'Revenue Quality', 'Operational Maturity', 'Digital Readiness', 'Management Depth', 'Market Position'];
 
   return (
-    <section id="v2-approach" style={sectionStyle}>
+    <section id="approach" style={sectionStyle}>
       <div style={inner}>
         <div style={{ marginBottom: '3.5rem', maxWidth: 640 }}>
           <span style={eyebrow}>Our Approach</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
             Saleability-First. Value-Driven.
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8 }}>
+          <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8 }}>
             ExitPath is an advisory built on value creation, not just deal execution.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginBottom: '3rem' }}>
+        <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', marginBottom: '3rem' }}>
           {blocks.map(b => (
             <div key={b.title} style={{ padding: '2.25rem 2rem', border: `1px solid ${BD}`, borderRadius: 0 }}>
               <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.875rem' }}>{b.step}</p>
-              <h3 style={{ fontFamily: serif, fontSize: '1.3rem', fontWeight: 700, color: MA, marginBottom: '0.875rem', lineHeight: 1.3 }}>{b.title}</h3>
-              <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.8 }}>{b.body}</p>
+              <h3 style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: MA, marginBottom: '0.875rem', lineHeight: 1.3 }}>{b.title}</h3>
+              <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8 }}>{b.body}</p>
             </div>
           ))}
         </div>
         <div style={{ padding: '1.5rem 2rem', border: `1px solid ${BD}`, borderRadius: 0, background: '#FBF8F3' }}>
-          <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+          <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1rem', textAlign: 'center' }}>
             The 6 Strategic Dimensions
           </p>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.625rem' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.625rem', justifyContent: 'center' }}>
             {dimensions.map(d => (
               <span key={d} style={{ fontFamily: sans, fontSize: '0.82rem', fontWeight: 600, color: MA, background: CR, border: `1px solid ${BD}`, padding: '0.375rem 0.875rem', borderRadius: 0 }}>{d}</span>
             ))}
@@ -349,45 +456,59 @@ function SaleabilityQuadrant() {
   ];
 
   return (
-    <section id="v2-quadrant" style={sectionStyle}>
+    <section id="quadrant" style={sectionStyle}>
       <div style={inner}>
         <div style={{ marginBottom: '3rem', maxWidth: 640, margin: '0 auto 3rem', textAlign: 'center' }}>
           <span style={eyebrow}>The Saleability Quadrant</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
             Where Does Your Business Sit?
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8 }}>
+          <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8 }}>
             The quadrant maps every business on two axes:{' '}
             <strong style={{ color: MA }}>Readiness to Sell</strong> (operational maturity, team depth, clean financials) against{' '}
             <strong style={{ color: MA }}>Attractiveness to Buyers</strong> (growth potential, competitive advantage, low risk). Your position determines your advisory pathway.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', maxWidth: 700, border: `1px solid ${BD}`, borderRadius: 0, overflow: 'hidden', margin: '0 auto' }}>
-          {cells.map((c, i) => (
-            <div key={c.name} style={{
-              background: c.bg, padding: '2rem',
-              borderBottom: i < 2 ? `1px solid ${BD}` : 'none',
-              borderRight: i % 2 === 0 ? `1px solid ${BD}` : 'none',
+        <div className="quadrant-wrapper" style={{ display: 'flex', alignItems: 'stretch', maxWidth: 740, margin: '0 auto' }}>
+          {/* Left vertical axis label */}
+          <div className="quadrant-axis" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingRight: '0.75rem', flexShrink: 0 }}>
+            <span className="quadrant-axis-text" style={{
+              fontFamily: sans, fontSize: '0.75rem', color: TM,
+              writingMode: 'vertical-rl', transform: 'rotate(180deg)',
+              whiteSpace: 'nowrap',
             }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                <span style={{ display: 'inline-block', background: c.accent, color: CR, fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.25rem 0.75rem', borderRadius: 0 }}>
-                  {c.name}
-                </span>
-                <span style={{ fontFamily: serif, fontSize: '1rem', fontWeight: 700, color: c.accent }}>{c.score}</span>
+              <span className="quadrant-axis-arrow" style={{ display: 'inline-block', transform: 'rotate(90deg)', marginRight: '2px' }}>↑</span>
+              {' '}High Attractiveness to Buyers (top row)
+            </span>
+          </div>
+          {/* Quadrant grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', flex: 1, border: `1px solid ${BD}`, borderRadius: 0, overflow: 'hidden' }}>
+            {cells.map((c, i) => (
+              <div key={c.name} style={{
+                background: c.bg, padding: '2rem',
+                borderBottom: i < 2 ? `1px solid ${BD}` : 'none',
+                borderRight: i % 2 === 0 ? `1px solid ${BD}` : 'none',
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                  <span style={{ display: 'inline-block', background: c.accent, color: CR, fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', padding: '0.25rem 0.75rem', borderRadius: 0 }}>
+                    {c.name}
+                  </span>
+                  <span style={{ fontFamily: serif, fontSize: '1rem', fontWeight: 700, color: c.accent }}>{c.score}</span>
+                </div>
+                <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.65, margin: 0 }}>{c.desc}</p>
               </div>
-              <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.65, margin: 0 }}>{c.desc}</p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-        <div style={{ display: 'flex', gap: '3rem', marginTop: '1.25rem', flexWrap: 'wrap', justifyContent: 'center', maxWidth: 700, margin: '1.25rem auto 0' }}>
-          <span style={{ fontFamily: sans, fontSize: '0.75rem', color: TM }}>↑ High Attractiveness to Buyers (top row)</span>
+        {/* Bottom center axis label */}
+        <div style={{ maxWidth: 740, margin: '0.75rem auto 0', textAlign: 'center' }}>
           <span style={{ fontFamily: sans, fontSize: '0.75rem', color: TM }}>→ High Readiness to Sell (right column)</span>
         </div>
         <div style={{ marginTop: '2.5rem', padding: '1.5rem 2rem', border: `1px solid ${BD}`, borderRadius: 0, maxWidth: 700, background: '#FBF8F3', margin: '2.5rem auto 0' }}>
-          <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.7, margin: 0 }}>
+          <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.7, margin: 0 }}>
             <strong style={{ color: MA }}>Not sure which quadrant you&apos;re in?</strong> Book a confidential Saleability Score™ assessment and find out exactly where your business stands — and what it will take to reach Ideal Sale.
           </p>
-          <a href="#v2-contact" style={{ display: 'inline-block', marginTop: '1rem', fontFamily: sans, fontSize: '0.8rem', fontWeight: 600, color: MA, textDecoration: 'none', borderBottom: `1px solid ${MA}` }}>
+          <a href="#contact" style={{ display: 'inline-block', marginTop: '1rem', fontFamily: sans, fontSize: '0.8rem', fontWeight: 600, color: MA, textDecoration: 'none', borderBottom: `1px solid ${MA}` }}>
             Book your assessment →
           </a>
         </div>
@@ -428,18 +549,18 @@ function Pricing() {
     },
   ];
   return (
-    <section id="v2-pricing" style={sectionStyle}>
+    <section id="pricing" style={sectionStyle}>
       <div style={inner}>
         <div style={{ marginBottom: '3.5rem', maxWidth: 600 }}>
           <span style={eyebrow}>Pricing Model</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
             Value-Aligned Fees
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8 }}>
+          <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8 }}>
             Pay more only when you win more. Our fees are structured so our incentives are always aligned with yours.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', alignItems: 'start' }}>
+        <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', alignItems: 'start' }}>
           {tiers.map(t => (
             <div key={t.name} style={{ padding: '2rem', border: t.featured ? `2px solid ${MA}` : `1px solid ${BD}`, borderRadius: 0, background: t.featured ? '#FBF8F3' : CR, position: 'relative' }}>
               {t.featured && (
@@ -450,22 +571,22 @@ function Pricing() {
               <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{t.subtitle}</p>
               <h3 style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: MA, marginBottom: '0.25rem' }}>{t.name}</h3>
               <p style={{ fontFamily: serif, fontSize: '1.75rem', fontWeight: 700, color: MA, marginBottom: '0.875rem' }}>{t.price}</p>
-              <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.7, marginBottom: '1.5rem' }}>{t.desc}</p>
+              <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.7, marginBottom: '1.5rem' }}>{t.desc}</p>
               <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 2rem 0', display: 'flex', flexDirection: 'column', gap: '0.625rem' }}>
                 {t.features.map(f => (
                   <li key={f} style={{ display: 'flex', gap: '0.625rem', alignItems: 'flex-start' }}>
                     <span style={{ color: GO, fontWeight: 700, flexShrink: 0 }}>✓</span>
-                    <span style={{ fontFamily: sans, fontSize: '0.875rem', color: TM }}>{f}</span>
+                    <span style={{ fontFamily: sans, fontSize: '1rem', color: TM }}>{f}</span>
                   </li>
                 ))}
               </ul>
-              <a href="#v2-contact" style={{ display: 'block', textAlign: 'center', fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: t.featured ? CR : MA, background: t.featured ? MA : 'transparent', border: `1px solid ${t.featured ? MA : BD}`, padding: '0.75rem', borderRadius: 0, textDecoration: 'none' }}>
+              <a href="#contact" style={{ display: 'block', textAlign: 'center', fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: t.featured ? CR : MA, background: t.featured ? MA : 'transparent', border: `1px solid ${t.featured ? MA : BD}`, padding: '0.75rem', borderRadius: 0, textDecoration: 'none' }}>
                 {t.cta}
               </a>
             </div>
           ))}
         </div>
-        <p style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: MA, marginTop: '2rem', fontStyle: 'italic' }}>
+        <p style={{ fontFamily: sans, fontSize: '0.875rem', fontWeight: 600, color: MA, marginTop: '2rem', fontStyle: 'italic', textAlign: 'center' }}>
           Aligned incentives — we win when you win.
         </p>
       </div>
@@ -499,34 +620,34 @@ function WhoWeServe() {
     },
   ];
   return (
-    <section id="v2-serve" style={sectionStyle}>
+    <section id="serve" style={sectionStyle}>
       <div style={{ ...inner }}>
         <div style={{ textAlign: 'center', maxWidth: 600, margin: '0 auto 2.5rem' }}>
           <span style={eyebrow}>Who We Serve</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '0.875rem' }}>
             Built for Founders at Every Stage of Exit
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8 }}>
+          <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8 }}>
             From Baby Boomer business owners approaching retirement to growth-stage founders considering strategic partnerships.
           </p>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+        <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
           {segs.map((s, i) => (
             <div key={s.title} style={{ paddingTop: '2rem', borderTop: `2px solid ${i === 0 ? MA : BD}` }}>
-              <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.25rem' }}>{s.label}</p>
-              <h3 style={{ fontFamily: serif, fontSize: '1.35rem', fontWeight: 700, color: MA, marginBottom: '0.25rem' }}>{s.title}</h3>
+              <p style={{ fontFamily: sans, fontSize: '1rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.25rem' }}>{s.label}</p>
+              <h3 style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: MA, marginBottom: '0.25rem' }}>{s.title}</h3>
               <p style={{ fontFamily: sans, fontSize: '0.75rem', fontWeight: 600, color: GO, marginBottom: '0.625rem' }}>{s.sub}</p>
-              <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM, lineHeight: 1.7, marginBottom: '0.875rem' }}>{s.desc}</p>
+              <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.7, marginBottom: '0.875rem' }}>{s.desc}</p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                 {s.needs.map(n => (
-                  <span key={n} style={{ fontFamily: sans, fontSize: '0.75rem', color: TM, background: '#EDE8DF', padding: '0.25rem 0.75rem', borderRadius: 0 }}>{n}</span>
+                  <span key={n} style={{ fontFamily: sans, fontSize: '1rem', color: TM, background: '#EDE8DF', padding: '0.25rem 0.75rem', borderRadius: 0 }}>{n}</span>
                 ))}
               </div>
             </div>
           ))}
         </div>
         <div style={{ marginTop: '2.5rem', padding: '1.25rem 1.5rem', border: `1px solid ${BD}`, borderRadius: 0 }}>
-          <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.7, margin: 0 }}>
+          <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.7, margin: 0 }}>
             Not sure if you fit? Book your Saleability Score™ assessment.{' '}
             <strong style={{ color: MA }}>No commitment. No pressure.</strong>
           </p>
@@ -551,7 +672,7 @@ function VisionValues() {
     { roman: 'V',   title: 'Global Perspective',      desc: 'We think cross-border, cross-industry, and cross-cycle — connecting the right buyers globally.' },
   ];
   return (
-    <section id="v2-values" style={sectionStyle}>
+    <section id="values" style={sectionStyle}>
       <div style={{ ...inner }}>
         <div style={{ maxWidth: 720 }}>
           <span style={eyebrow}>About ExitPath</span>
@@ -559,31 +680,31 @@ function VisionValues() {
             Why We Exist
           </h2>
           <div style={{ marginBottom: '1.25rem' }}>
-            <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '0.62rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: MA, marginBottom: '0.375rem' }}>OUR VISION</p>
-            <p style={{ fontFamily: sans, fontSize: '0.925rem', color: TM, lineHeight: 1.75 }}>To become the most trusted global exit advisory for founders navigating their most important transition.</p>
+            <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '1.5rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: MA, marginBottom: '0.375rem' }}>OUR VISION</p>
+            <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.75 }}>To become the most trusted global exit advisory for founders navigating their most important transition.</p>
           </div>
           <div style={{ marginBottom: '2rem', paddingBottom: '2rem', borderBottom: `1px solid ${BD}` }}>
-            <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '0.62rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: MA, marginBottom: '0.375rem' }}>OUR MISSION</p>
-            <p style={{ fontFamily: sans, fontSize: '0.925rem', color: TM, lineHeight: 1.75 }}>To help founders exit with clarity, confidence, and maximum value by transforming businesses into investor-ready assets.</p>
+            <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '1.5rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: MA, marginBottom: '0.375rem' }}>OUR MISSION</p>
+            <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.75 }}>To help founders exit with clarity, confidence, and maximum value by transforming businesses into investor-ready assets.</p>
           </div>
           <div style={{ marginBottom: '2rem', paddingBottom: '2rem', borderBottom: `1px solid ${BD}` }}>
-            <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '0.62rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: MA, marginBottom: '0.875rem' }}>GROWTH VISION</p>
-            <p style={{ fontFamily: serif, fontSize: '1.1rem', fontWeight: 600, color: MA, marginBottom: '0.875rem' }}>Building the World&apos;s Most Trusted Exit Advisory</p>
+            <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '1.5rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: MA, marginBottom: '0.875rem' }}>GROWTH VISION</p>
+            <p style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 600, color: MA, marginBottom: '0.875rem' }}>Building the World&apos;s Most Trusted Exit Advisory</p>
             {milestones.map(m => (
               <div key={m} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
                 <span style={{ color: GO, fontWeight: 700, flexShrink: 0 }}>→</span>
-                <span style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.6 }}>{m}</span>
+                <span style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.6 }}>{m}</span>
               </div>
             ))}
           </div>
-          <p style={{ fontFamily: serif, fontSize: '1.35rem', fontWeight: 700, color: MA, marginBottom: '1.25rem' }}>Values</p>
+          <p style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, marginBottom: '1.25rem' }}>Values</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
             {values.map(v => (
               <div key={v.roman} style={{ display: 'flex', gap: '0.875rem', alignItems: 'flex-start' }}>
                 <span style={{ fontFamily: serif, fontSize: '1rem', fontWeight: 700, color: GO, flexShrink: 0, minWidth: 22 }}>{v.roman}</span>
                 <div>
-                  <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '0.925rem', color: MA, marginBottom: '0.2rem' }}>{v.title}</p>
-                  <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.65 }}>{v.desc}</p>
+                  <p style={{ fontFamily: sans, fontWeight: 700, fontSize: '1.5rem', color: MA, marginBottom: '0.2rem' }}>{v.title}</p>
+                  <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.65 }}>{v.desc}</p>
                 </div>
               </div>
             ))}
@@ -615,7 +736,7 @@ function Proof() {
   ];
   const accents = [MA, GO, GL];
   return (
-    <section id="v2-proof" style={sectionStyle}>
+    <section id="proof" style={sectionStyle}>
       <div style={inner}>
         <div style={{ marginBottom: '3.5rem', maxWidth: 600 }}>
           <span style={eyebrow}>Why Clients Choose ExitPath</span>
@@ -623,12 +744,12 @@ function Proof() {
             Our promise is tangible, measurable, and defensible.
           </h2>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+        <div className="grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
           {cards.map((c, i) => (
             <div key={c.label} style={{ padding: '2rem', border: `1px solid ${BD}`, borderRadius: 0, borderTop: `3px solid ${accents[i]}` }}>
               <p style={{ fontFamily: sans, fontSize: '0.62rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{c.label}</p>
-              <h3 style={{ fontFamily: serif, fontSize: '1.3rem', fontWeight: 700, color: MA, marginBottom: '1rem', lineHeight: 1.3 }}>{c.title}</h3>
-              <p style={{ fontFamily: sans, fontSize: '0.875rem', color: TM, lineHeight: 1.75 }}>{c.body}</p>
+              <h3 style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: MA, marginBottom: '1rem', lineHeight: 1.3 }}>{c.title}</h3>
+              <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.75 }}>{c.body}</p>
             </div>
           ))}
         </div>
@@ -649,7 +770,7 @@ function CTA() {
         <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem' }}>
           Book a confidential discovery call. We&apos;ll run your Saleability Score™ and show you exactly where value is being left on the table.
         </p>
-        <a href="#v2-contact" style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '1rem 2.5rem', borderRadius: 0, textDecoration: 'none', display: 'inline-block' }}>
+        <a href="#contact" style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '1rem 2.5rem', borderRadius: 0, textDecoration: 'none', display: 'inline-block' }}>
           Book a Discovery Call
         </a>
       </div>
@@ -660,7 +781,8 @@ function CTA() {
 // ─── Section 12: Contact ─────────────────────────────────────────────────────
 function Contact() {
   const [form, setForm]     = useState({ fullName: '', email: '', phone: '', message: '' });
-  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -669,10 +791,10 @@ function Contact() {
       const r = await fetch('/api/subscribe', {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ firstName: form.fullName.split(' ')[0], email: form.email }),
+        body:    JSON.stringify({ firstName: form.fullName.split(' ')[0], email: form.email, phone: form.phone, message: form.message }),
       });
       if (!r.ok) throw new Error();
-      setStatus('sent');
+      router.push('/thank-you');
     } catch {
       setStatus('error');
     }
@@ -689,24 +811,18 @@ function Contact() {
   };
 
   return (
-    <section id="v2-contact" style={sectionStyle}>
+    <section id="contact" style={sectionStyle}>
       <div style={{ ...inner, display: 'flex', justifyContent: 'center' }}>
         <div style={{ maxWidth: 640, width: '100%' }}>
           <span style={{ ...eyebrow, textAlign: 'center', display: 'block' }}>Get In Touch</span>
           <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: MA, lineHeight: 1.2, marginBottom: '1rem', textAlign: 'center' }}>
             Start Your Exit Journey
           </h2>
-          <p style={{ fontFamily: sans, fontSize: '0.95rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem', textAlign: 'center' }}>
+          <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.8, marginBottom: '2.5rem', textAlign: 'center' }}>
             Book a confidential discovery call. We&apos;ll run your Saleability Score™ and show you exactly where value is being left on the table.
           </p>
-          {status === 'sent' ? (
-            <div style={{ padding: '2rem', border: `1px solid ${GO}`, borderRadius: 0, background: '#FBF8F0' }}>
-              <p style={{ fontFamily: sans, fontWeight: 700, color: MA, marginBottom: '0.5rem' }}>Message received.</p>
-              <p style={{ fontFamily: sans, fontSize: '0.9rem', color: TM }}>We&apos;ll be in touch within one business day.</p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div className="contact-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
                   <label style={labelStyle}>Full Name</label>
                   <input type="text" required placeholder="Your full name" value={form.fullName}
@@ -734,13 +850,12 @@ function Contact() {
                 {status === 'sending' ? 'Sending…' : 'Book a Discovery Call'}
               </button>
               {status === 'error' && (
-                <p style={{ fontFamily: sans, fontSize: '0.875rem', color: '#C0392B' }}>
+                <p style={{ fontFamily: sans, fontSize: '1rem', color: '#C0392B' }}>
                   Something went wrong. Please email us at{' '}
                   <a href="mailto:consulting@kevindam.com" style={{ color: MA }}>consulting@kevindam.com</a>
                 </p>
               )}
             </form>
-          )}
         </div>
       </div>
     </section>
@@ -751,26 +866,26 @@ function Contact() {
 function Footer() {
   return (
     <footer style={{ background: '#EDE8D8', borderTop: `1px solid ${BD}`, padding: '3rem 2rem' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem' }}>
+      <div className="footer-inner" style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1.5rem' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.375rem' }}>
             <span style={{ fontFamily: serif, fontSize: '1.25rem', fontWeight: 700, color: GL }}>Exit</span>
             <span style={{ fontFamily: serif, fontSize: '1.25rem', fontWeight: 600, color: MA }}>Path</span>
             <span style={{ fontFamily: sans, fontSize: '0.6rem', fontWeight: 500, color: TM, marginLeft: '0.25rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Global</span>
           </div>
-          <p style={{ fontFamily: sans, fontSize: '0.8rem', color: TM, fontStyle: 'italic' }}>Ownership to Opportunity</p>
+          <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, fontStyle: 'italic' }}>Ownership to Opportunity</p>
         </div>
         <nav style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
           {[
-            { label: 'Our Approach', href: '#v2-approach' },
-            { label: 'Pricing',      href: '#v2-pricing'  },
-            { label: 'Who We Serve', href: '#v2-serve'    },
-            { label: 'Contact',      href: '#v2-contact'  },
+            { label: 'Our Approach', href: '#approach' },
+            { label: 'Pricing',      href: '#pricing'  },
+            { label: 'Who We Serve', href: '#serve'    },
+            { label: 'Contact',      href: '#contact'  },
           ].map(l => (
-            <a key={l.href} href={l.href} style={{ fontFamily: sans, fontSize: '0.8rem', color: TM, textDecoration: 'none' }}>{l.label}</a>
+            <a key={l.href} href={l.href} style={{ fontFamily: sans, fontSize: '1rem', color: TM, textDecoration: 'none' }}>{l.label}</a>
           ))}
         </nav>
-        <p style={{ fontFamily: sans, fontSize: '0.75rem', color: TM }}>© 2025 ExitPath Global. All rights reserved.</p>
+        <p style={{ fontFamily: sans, fontSize: '1rem', color: TM }}>© 2025 ExitPath Global. All rights reserved.</p>
       </div>
     </footer>
   );
@@ -783,9 +898,28 @@ export default function Ver2Page() {
       <style>{`
         * { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; }
+
         @media (max-width: 768px) {
           .mobile-menu-btn { display: flex !important; }
           nav { display: none !important; }
+          section { padding-top: 56px !important; padding-bottom: 56px !important; padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+          .hero-section { padding-top: 88px !important; }
+          .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-video { display: none !important; }
+          .grid-2 { grid-template-columns: 1fr !important; }
+          .grid-3 { grid-template-columns: 1fr !important; }
+          .quadrant-wrapper { flex-direction: column !important; }
+          .quadrant-axis { padding-right: 0 !important; padding-bottom: 0.5rem !important; flex-direction: row !important; align-items: center !important; }
+          .quadrant-axis-text { writing-mode: horizontal-tb !important; transform: none !important; }
+          .quadrant-axis-arrow { display: none !important; }
+          .contact-grid { grid-template-columns: 1fr !important; }
+          .stats-bar { gap: 1.5rem !important; }
+          .footer-inner { flex-direction: column !important; align-items: flex-start !important; gap: 1.5rem !important; }
+        }
+
+        @media (min-width: 769px) and (max-width: 1100px) {
+          .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
+          section { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
         }
       `}</style>
       <div style={{ background: CR, fontFamily: sans, color: TX, overflowX: 'hidden' }}>
