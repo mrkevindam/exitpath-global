@@ -138,7 +138,7 @@ export default function ThankYouPage() {
               <span style={{ fontFamily: serif, fontSize: '1.25rem', fontWeight: 600, color: MA }}>Path</span>
               <span style={{ fontFamily: sans, fontSize: '0.6rem', fontWeight: 500, color: TM, marginLeft: '0.25rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Global</span>
             </div>
-            <p style={{ fontFamily: sans, fontSize: '1rem', color: TM }}>© 2025 ExitPath Global. All rights reserved.</p>
+            <p style={{ fontFamily: sans, fontSize: '1rem', color: TM }}>© 2026 ExitPath Global. All rights reserved.</p>
           </div>
         </footer>
 
