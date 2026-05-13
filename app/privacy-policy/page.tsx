@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 // ─── Design Tokens ─────────────────────────────────────────────────────────
 const CR  = '#F5F0E4';
 const MA  = '#501508';
@@ -11,6 +13,78 @@ const BD  = '#DDD6C8';
 
 const serif = "'Cormorant Garamond', Georgia, serif";
 const sans  = "'Jost', system-ui, sans-serif";
+
+// ─── Site Header ─────────────────────────────────────────────────────────────
+function SiteHeader() {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 30);
+    window.addEventListener('scroll', fn, { passive: true });
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+
+  const links = [
+    { label: 'Our Approach', href: '/#approach' },
+    { label: 'Pricing',      href: '/#pricing'  },
+    { label: 'Who We Serve', href: '/#serve'    },
+  ];
+
+  return (
+    <header style={{
+      position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+      background: scrolled ? 'rgba(245,240,228,0.97)' : CR,
+      borderBottom: scrolled ? `1px solid ${BD}` : `1px solid ${BD}`,
+      backdropFilter: scrolled ? 'blur(8px)' : 'none',
+      transition: 'all 0.3s ease',
+    }}>
+      <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+          <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: GL }}>Exit</span>
+          <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 600, color: MA }}>Path</span>
+          <span style={{ fontFamily: sans, fontSize: '0.63rem', fontWeight: 500, color: TM, marginLeft: '0.3rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Global</span>
+        </a>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '2rem' }} className="desktop-nav">
+          {links.map(l => (
+            <a key={l.href} href={l.href} style={{ fontFamily: sans, fontSize: '1rem', fontWeight: 500, color: TM, textDecoration: 'none' }}>{l.label}</a>
+          ))}
+          <a href="/#contact" style={{ fontFamily: sans, fontSize: '1rem', fontWeight: 600, color: CR, background: MA, padding: '0.5rem 1.25rem', borderRadius: 0, textDecoration: 'none' }}>
+            Start a Conversation
+          </a>
+        </nav>
+        <button onClick={() => setOpen(o => !o)} aria-label="Menu"
+          style={{ background: 'none', border: `1px solid ${BD}`, cursor: 'pointer', padding: '8px 10px', display: 'none', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 5, width: 44, height: 44 }}
+          className="mobile-menu-btn">
+          {open ? (
+            <>
+              <span style={{ display: 'block', width: 22, height: 2, background: MA, transform: 'rotate(45deg) translate(5px, 5px)', transition: 'all 0.2s' }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: MA, opacity: 0, transition: 'all 0.2s' }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: MA, transform: 'rotate(-45deg) translate(5px, -5px)', transition: 'all 0.2s' }} />
+            </>
+          ) : (
+            <>
+              <span style={{ display: 'block', width: 22, height: 2, background: MA }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: MA }} />
+              <span style={{ display: 'block', width: 22, height: 2, background: MA }} />
+            </>
+          )}
+        </button>
+      </div>
+      {open && (
+        <div style={{ background: CR, borderTop: `1px solid ${BD}`, padding: '1.5rem 2rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          {links.map(l => (
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)}
+              style={{ fontFamily: sans, fontSize: '1rem', color: MA, textDecoration: 'none' }}>{l.label}</a>
+          ))}
+          <a href="/#contact" onClick={() => setOpen(false)}
+            style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: CR, background: MA, padding: '0.75rem', borderRadius: 0, textDecoration: 'none', textAlign: 'center' }}>
+            Start a Conversation
+          </a>
+        </div>
+      )}
+    </header>
+  );
+}
 
 export default function PrivacyPolicyPage() {
   return (
@@ -26,23 +100,19 @@ export default function PrivacyPolicyPage() {
         .pp-section { margin-bottom: 2rem; }
         .pp-highlight { background: #f9f5ef; border-left: 3px solid ${GL}; padding: 1rem 1.25rem; margin: 1.5rem 0; border-radius: 0 6px 6px 0; }
         .pp-highlight p { margin: 0; font-size: 0.95rem; color: ${TM}; font-family: ${sans}; line-height: 1.75; }
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+        }
       `}</style>
 
       <div style={{ background: CR, minHeight: '100vh', fontFamily: sans, color: TX, display: 'flex', flexDirection: 'column' }}>
 
         {/* Header */}
-        <header style={{ borderBottom: `1px solid ${BD}`, background: CR }}>
-          <div style={{ maxWidth: 1100, margin: '0 auto', padding: '0 2rem', height: 64, display: 'flex', alignItems: 'center' }}>
-            <a href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-              <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 700, color: GL }}>Exit</span>
-              <span style={{ fontFamily: serif, fontSize: '1.5rem', fontWeight: 600, color: MA }}>Path</span>
-              <span style={{ fontFamily: sans, fontSize: '0.63rem', fontWeight: 500, color: TM, marginLeft: '0.3rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Global</span>
-            </a>
-          </div>
-        </header>
+        <SiteHeader />
 
         {/* Main content */}
-        <main style={{ flex: 1, padding: '4rem 2rem' }}>
+        <main style={{ flex: 1, padding: '4rem 2rem', paddingTop: '6rem' }}>
           <div style={{ maxWidth: 780, margin: '0 auto' }}>
 
             {/* Title */}
