@@ -145,19 +145,19 @@ function Hero() {
             className="hero-video"
             style={{
               position: 'relative',
-              width: 260,
-              height: 462,
+              width: '100%',
+              aspectRatio: '16/9',
               justifySelf: 'center',
               cursor: 'pointer',
-              background: `linear-gradient(160deg, ${MA} 0%, #2A0A04 100%)`,
               overflow: 'hidden',
               border: `1px solid rgba(188,156,34,0.3)`,
+              backgroundImage: `url(https://img.youtube.com/vi/a6kjOPjkjVc/maxresdefault.jpg)`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
           >
-            {/* Subtle brand text */}
-            <div style={{ position: 'absolute', bottom: 20, left: 0, right: 0, textAlign: 'center' }}>
-              <span style={{ fontFamily: serif, fontSize: '0.8rem', color: 'rgba(188,156,34,0.7)', letterSpacing: '0.12em' }}>ExitPath Global</span>
-            </div>
+            {/* Dark overlay */}
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(40,8,4,0.45)' }} />
             {/* Play button */}
             <div style={{
               position: 'absolute', inset: 0,
@@ -165,16 +165,15 @@ function Hero() {
             }}>
               <div style={{
                 width: 60, height: 60, borderRadius: '50%',
-                background: 'rgba(255,255,255,0.12)',
-                border: '2px solid rgba(255,255,255,0.6)',
+                background: 'rgba(255,255,255,0.15)',
+                border: '2px solid rgba(255,255,255,0.8)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                transition: 'background 0.2s',
               }}>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <polygon points="6,3 17,10 6,17" fill="white" />
                 </svg>
               </div>
-              <span style={{ fontFamily: sans, fontSize: '0.65rem', fontWeight: 600, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Watch</span>
+              <span style={{ fontFamily: sans, fontSize: '0.65rem', fontWeight: 600, color: 'rgba(255,255,255,0.9)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>Watch</span>
             </div>
           </div>
         </div>
@@ -221,14 +220,16 @@ function Hero() {
           {/* Video container — stop propagation so clicking video doesn't close */}
           <div
             onClick={e => e.stopPropagation()}
-            style={{ position: 'relative', maxHeight: '90vh', aspectRatio: '9/16' }}
+            style={{ position: 'relative', width: '90vw', maxWidth: 1100, aspectRatio: '16/9' }}
           >
-            <video
-              src="/video/hero.mp4"
-              autoPlay
-              controls
-              playsInline
-              style={{ height: '90vh', width: 'auto', maxWidth: '90vw', display: 'block' }}
+            <iframe
+              src="https://www.youtube.com/embed/a6kjOPjkjVc?si=prAtekYE0KWwec8Q&autoplay=1"
+              title="YouTube video player"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+              style={{ width: '100%', height: '100%', display: 'block' }}
             />
           </div>
         </div>
