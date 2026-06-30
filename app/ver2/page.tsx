@@ -517,6 +517,28 @@ function SaleabilityQuadrant() {
   );
 }
 
+// ─── Section 6b: Saleability Assessment CTA ──────────────────────────────────
+function SaleabilityAssessmentCTA() {
+  return (
+    <section style={{ background: MA, padding: '72px 2rem', borderTop: `1px solid ${BD}` }}>
+      <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
+        <span style={{ fontFamily: sans, fontSize: '1.25rem', fontWeight: 600, color: GO, letterSpacing: '0.15em', textTransform: 'uppercase', display: 'block', marginBottom: '1rem' }}>
+          Saleability Score™
+        </span>
+        <h2 style={{ fontFamily: serif, fontSize: 'clamp(1.9rem, 3.5vw, 2.75rem)', fontWeight: 700, color: CR, lineHeight: 1.2, marginBottom: '1.25rem' }}>
+          Find out where your business stands.
+        </h2>
+        <p style={{ fontFamily: sans, fontSize: '1rem', color: `rgba(245,240,228,0.75)`, lineHeight: 1.8, marginBottom: '2.5rem', maxWidth: 520, margin: '0 auto 2.5rem' }}>
+          Our six-dimension assessment scores your business across readiness, attractiveness, and risk — giving you a clear picture of where value is being created or left on the table.
+        </p>
+        <a href="/saleability-assessment" style={{ fontFamily: sans, fontSize: '0.9rem', fontWeight: 600, color: MA, background: GL, padding: '0.875rem 2.5rem', textDecoration: 'none', display: 'inline-block' }}>
+          Take the Saleability Score™ →
+        </a>
+      </div>
+    </section>
+  );
+}
+
 // ─── Section 7: Pricing ──────────────────────────────────────────────────────
 function Pricing() {
   const tiers = [
@@ -648,7 +670,8 @@ function WhoWeServe() {
         </div>
         <div style={{ marginTop: '2.5rem', padding: '1.25rem 1.5rem', border: `1px solid ${BD}`, borderRadius: 0 }}>
           <p style={{ fontFamily: sans, fontSize: '1rem', color: TM, lineHeight: 1.7, margin: 0 }}>
-            Not sure if you fit? Book your Saleability Score™ assessment.{' '}
+            Not sure if you fit?{' '}
+            <a href="#contact" style={{ color: MA, fontWeight: 600, textDecoration: 'none', borderBottom: `1px solid ${MA}` }}>Book your Saleability Score™ assessment</a>.{' '}
             <strong style={{ color: MA }}>No commitment. No pressure.</strong>
           </p>
         </div>
@@ -944,6 +967,7 @@ export default function Ver2Page() {
           <Differentiators />
           <Approach />
           <SaleabilityQuadrant />
+          <SaleabilityAssessmentCTA />
           <Pricing />
           <WhoWeServe />
           <VisionValues />
