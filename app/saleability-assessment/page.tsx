@@ -14,7 +14,7 @@ const serif = "'Cormorant Garamond', Georgia, serif";
 const sans  = "'Jost', system-ui, sans-serif";
 
 // ── Types ──────────────────────────────────────────────────────────────────
-interface CompanyMetadata { name: string; sector?: string; country?: string; }
+interface CompanyMetadata { name: string; email: string; sector?: string; country?: string; }
 interface QuestionScore   { q1: number; q2: number; q3: number; q4: number; q5: number; q6: number; }
 interface QuestionNotes   { [key: string]: string | undefined; }
 type SaleabilityTier = 'Highly Saleable' | 'Saleable with Minor Adjustments' | 'Needs Improvement / Risky' | 'Poor Saleability';
@@ -378,14 +378,22 @@ function ScoreBar({ score, max = 5, label }: { score: number; max?: number; labe
 const INITIAL_SCORES: QuestionScore = { q1: 0, q2: 0, q3: 0, q4: 0, q5: 0, q6: 0 };
 
 export default function SaleabilityAssessmentPage() {
-  const [company, setCompany] = useState<CompanyMetadata>({ name: '', sector: '', country: '' });
+  const [company, setCompany] = useState<CompanyMetadata>({ name: '', email: '', sector: '', country: '' });
   const [scores, setScores]   = useState<QuestionScore>(INITIAL_SCORES);
   const [notes, setNotes]     = useState<QuestionNotes>({});
   const [result, setResult]   = useState<AssessmentResponse | null>(null);
-  const [showInternal, setShowInternal] = useState(false);
   const [validationError, setValidationError] = useState('');
+  const [touched, setTouched] = useState<{ name?: boolean; email?: boolean }>({});
 
   const handleCalculate = () => {
+    if (!company.name.trim()) {
+      setValidationError('Please enter a company name before calculating.');
+      return;
+    }
+    if (!company.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(company.email)) {
+      setValidationError('Please enter a valid email address before calculating.');
+      return;
+    }
     const unanswered = QUESTIONS.filter(q => scores[q.id as keyof QuestionScore] === 0);
     if (unanswered.length > 0) {
       setValidationError(`Please answer all questions before calculating. Missing: ${unanswered.map(q => q.title).join(', ')}.`);
@@ -399,11 +407,12 @@ export default function SaleabilityAssessmentPage() {
   };
 
   const handleReset = () => {
-    setCompany({ name: '', sector: '', country: '' });
+    setCompany({ name: '', email: '', sector: '', country: '' });
     setScores(INITIAL_SCORES);
     setNotes({});
     setResult(null);
     setValidationError('');
+    setTouched({});
   };
 
   const inputStyle: React.CSSProperties = {
@@ -448,33 +457,26 @@ export default function SaleabilityAssessmentPage() {
                     Score how ready and attractive a business is to sell. Rate each of the six dimensions from 1 (weak) to 5 (strong).
                   </p>
                 </div>
-                {/* Internal toggle */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', background: `rgba(188,156,34,0.08)`, border: `1px solid ${BD}`, padding: '0.75rem 1rem' }}>
-                  <span style={{ fontFamily: sans, fontSize: '0.8rem', fontWeight: 600, color: MA }}>Show Internal Panel</span>
-                  <button
-                    onClick={() => setShowInternal(p => !p)}
-                    style={{
-                      width: 44, height: 24, borderRadius: 12, border: 'none', cursor: 'pointer',
-                      background: showInternal ? MA : BD, position: 'relative', transition: 'background 0.2s',
-                    }}>
-                    <span style={{
-                      position: 'absolute', top: 3, left: showInternal ? 22 : 2,
-                      width: 18, height: 18, borderRadius: '50%', background: '#fff',
-                      transition: 'left 0.2s',
-                    }} />
-                  </button>
-                </div>
               </div>
             </div>
 
             {/* Company Details */}
             <div style={{ background: '#fff', border: `1px solid ${BD}`, padding: '1.5rem', marginBottom: '2rem' }}>
               <p style={{ fontFamily: sans, fontSize: '0.65rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1rem' }}>Company Details</p>
-              <div className="sa-meta-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+              <div className="sa-meta-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                 <div>
-                  <label style={labelStyle}>Company Name <span style={{ color: MA }}>*</span></label>
+                  <label style={labelStyle}>Company Name <span style={{ color: '#b91c1c' }}>*</span></label>
                   <input type="text" required placeholder="e.g., Acme Inc." value={company.name}
-                    onChange={e => setCompany(p => ({ ...p, name: e.target.value }))} style={inputStyle} />
+                    onChange={e => setCompany(p => ({ ...p, name: e.target.value }))}
+                    onBlur={() => setTouched(p => ({ ...p, name: true }))}
+                    style={{ ...inputStyle, borderColor: touched.name && !company.name.trim() ? `rgba(185,28,28,0.5)` : BD }} />
+                </div>
+                <div>
+                  <label style={labelStyle}>Email <span style={{ color: '#b91c1c' }}>*</span></label>
+                  <input type="email" required placeholder="e.g., name@company.com" value={company.email}
+                    onChange={e => setCompany(p => ({ ...p, email: e.target.value }))}
+                    onBlur={() => setTouched(p => ({ ...p, email: true }))}
+                    style={{ ...inputStyle, borderColor: touched.email && (!company.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(company.email)) ? `rgba(185,28,28,0.5)` : BD }} />
                 </div>
                 <div>
                   <label style={labelStyle}>Sector</label>
@@ -501,7 +503,7 @@ export default function SaleabilityAssessmentPage() {
                     note={notes[q.id] || ''}
                     onScoreChange={v => setScores(p => ({ ...p, [q.id]: v }))}
                     onNoteChange={v => setNotes(p => ({ ...p, [q.id]: v }))}
-                    showNotes={showInternal}
+                    showNotes={false}
                   />
                 ))}
               </div>
@@ -537,7 +539,7 @@ export default function SaleabilityAssessmentPage() {
                   <p style={{ fontFamily: sans, fontSize: '0.8rem', color: TM, marginTop: '0.5rem' }}>ID: {result.assessmentId}</p>
                 </div>
 
-                <div className="sa-results-grid" style={{ display: 'grid', gridTemplateColumns: showInternal ? '1fr 340px' : '1fr', gap: '2rem' }}>
+                <div className="sa-results-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem' }}>
 
                   {/* Client Summary */}
                   <div>
@@ -582,70 +584,6 @@ export default function SaleabilityAssessmentPage() {
                     </div>
                   </div>
 
-                  {/* Internal Panel */}
-                  {showInternal && (
-                    <div style={{ background: '#fff', border: `1px solid ${BD}`, padding: '1.5rem', alignSelf: 'flex-start', position: 'sticky', top: 80 }}>
-                      <p style={{ fontFamily: sans, fontSize: '0.65rem', fontWeight: 700, color: GO, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '1rem' }}>Internal Diagnostics</p>
-                      <p style={{ fontFamily: sans, fontSize: '0.72rem', color: TM, marginBottom: '1.25rem', fontStyle: 'italic' }}>Private — assessor's eyes only.</p>
-
-                      {/* Metrics */}
-                      <div style={{ borderBottom: `1px solid ${BD}`, paddingBottom: '1rem', marginBottom: '1rem' }}>
-                        <p style={{ fontFamily: sans, fontSize: '0.72rem', fontWeight: 700, color: MA, marginBottom: '0.5rem' }}>Computed Metrics</p>
-                        {[
-                          ['Total Score', `${result.computed.totalScore}/30`],
-                          ['Tier', result.computed.tier],
-                          ['Quadrant', result.computed.quadrant],
-                          ['Gate Result', result.computed.gateResult],
-                          ['Readiness', result.computed.readiness.toFixed(2)],
-                          ['Attractiveness', result.computed.attractiveness.toFixed(2)],
-                        ].map(([k, v]) => (
-                          <div key={k} style={{ display: 'flex', justifyContent: 'space-between', fontFamily: sans, fontSize: '0.78rem', padding: '0.25rem 0', borderBottom: `1px solid rgba(221,214,200,0.4)` }}>
-                            <span style={{ color: TM }}>{k}</span>
-                            <span style={{ fontWeight: 600, color: MA }}>{v}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Flags */}
-                      <div style={{ borderBottom: `1px solid ${BD}`, paddingBottom: '1rem', marginBottom: '1rem' }}>
-                        <p style={{ fontFamily: sans, fontSize: '0.72rem', fontWeight: 700, color: MA, marginBottom: '0.5rem' }}>Internal Flags</p>
-                        {Object.entries(result.computed.internalFlags).map(([key, val]) => (
-                          <div key={key} style={{ display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.72rem', padding: '0.2rem 0', borderBottom: `1px solid rgba(221,214,200,0.4)` }}>
-                            <span style={{ color: TM }}>{key}</span>
-                            <span style={{ fontWeight: 700, color: val ? '#b91c1c' : '#16a34a' }}>{String(val)}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Notes */}
-                      <div>
-                        <p style={{ fontFamily: sans, fontSize: '0.72rem', fontWeight: 700, color: MA, marginBottom: '0.5rem' }}>Assessor Notes</p>
-                        {QUESTIONS.map(q => {
-                          const note = notes[q.id];
-                          if (!note?.trim()) return null;
-                          return (
-                            <div key={q.id} style={{ marginBottom: '0.75rem' }}>
-                              <p style={{ fontFamily: sans, fontSize: '0.72rem', fontWeight: 600, color: GO }}>{q.title}</p>
-                              <p style={{ fontFamily: sans, fontSize: '0.78rem', color: TX, whiteSpace: 'pre-wrap' }}>{note}</p>
-                            </div>
-                          );
-                        })}
-                        {!Object.values(notes).some(n => n?.trim()) && (
-                          <p style={{ fontFamily: sans, fontSize: '0.78rem', color: TM, fontStyle: 'italic' }}>No notes added.</p>
-                        )}
-                      </div>
-
-                      {/* Copy button */}
-                      <button
-                        onClick={() => {
-                          const text = `Assessment: ${result.company.name}\nResult: ${result.clientSummary.title}\n${result.clientSummary.scoreLine}\nQuadrant: ${result.computed.quadrant}\nGate: ${result.computed.gateResult}\n\n${result.clientSummary.message}`;
-                          navigator.clipboard.writeText(text);
-                        }}
-                        style={{ marginTop: '1.25rem', width: '100%', fontFamily: sans, fontSize: '0.78rem', fontWeight: 600, color: MA, background: 'transparent', border: `1px solid ${BD}`, padding: '0.6rem', cursor: 'pointer' }}>
-                        Copy Summary to Clipboard
-                      </button>
-                    </div>
-                  )}
                 </div>
               </div>
             )}
