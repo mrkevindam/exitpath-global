@@ -400,7 +400,29 @@ export default function SaleabilityAssessmentPage() {
       return;
     }
     setValidationError('');
-    setResult(calculateAssessment(company, scores, notes));
+    const data = calculateAssessment(company, scores, notes);
+    setResult(data);
+
+    // Fire-and-forget — send notification email
+    fetch('/api/assessment', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        assessmentId:   data.assessmentId,
+        companyName:    data.company.name,
+        email:          data.company.email,
+        sector:         data.company.sector,
+        country:        data.company.country,
+        ...data.scores,
+        totalScore:     data.computed.totalScore,
+        tier:           data.computed.tier,
+        quadrant:       data.computed.quadrant,
+        gateResult:     data.computed.gateResult,
+        readiness:      data.computed.readiness,
+        attractiveness: data.computed.attractiveness,
+      }),
+    }).catch(console.error);
+
     setTimeout(() => {
       document.getElementById('sa-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
