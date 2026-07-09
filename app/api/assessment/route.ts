@@ -94,8 +94,8 @@ export async function POST(req: NextRequest) {
 
     await Promise.all([
       resend.emails.send({
-        from: 'onboarding@resend.dev',
-        to: notifyEmail,
+        from: 'noreply@exitpath.global',
+        to: [notifyEmail, 'enquiries@exitpath.global'],
         subject: `[${gateResult}] New Saleability Score™ — ${companyName} (${totalScore}/30)`,
         html,
       }),
